@@ -44,7 +44,71 @@
       --white: #ffffff;
       --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-sans: 'Montserrat', sans-serif;
+      /* colores semánticos que cambian con dark mode */
+      --bg:        var(--cream);
+      --bg-card:   var(--white);
+      --bg-section: var(--cream);
+      --text:      var(--brown);
+      --text-soft: #6b5e5e;
+      --text-muted: #8a7a7a;
+      --border:    var(--blush);
     }
+
+    /* ═══════════════════════════════════════════════
+       MODO NOCTURNO
+       Cambiá los colores de las variables si querés
+       ajustar el tono oscuro
+       ═══════════════════════════════════════════════ */
+    body.dark {
+      --cream:     #1a1412;
+      --white:     #231e1b;
+      --blush:     #3a2f2a;
+      --brown:     #e8d5c4;
+      --gold:      #c9a96e;
+      --gold-dark: #e0bb88;
+      --rose:      #c49080;
+      --bg:        #1a1412;
+      --bg-card:   #231e1b;
+      --bg-section: #1e1814;
+      --text:      #e8d5c4;
+      --text-soft: #b8a898;
+      --text-muted: #907870;
+      --border:    #3a2f2a;
+    }
+    body.dark #quote-strip     { background: #110e0c; }
+    body.dark #contact         { background: #110e0c; }
+    body.dark footer           { background: #0d0b09; }
+    body.dark nav.scrolled     { background: rgba(17,14,12,0.95); }
+    body.dark .about-img::before { border-color: var(--gold); }
+    body.dark .masonry-item img  { filter: sepia(15%) saturate(70%) brightness(0.85); }
+    body.dark .about-slide img   { filter: sepia(15%) saturate(70%) brightness(0.85); }
+    body.dark .svc-modal-box     { background: #231e1b; }
+    body.dark .calendly-placeholder { background: #231e1b; border-color: var(--gold); }
+    body.dark .contact-form input,
+    body.dark .contact-form textarea { background: rgba(255,255,255,0.04); color: var(--cream); }
+    body.dark .calc-group        { background: #231e1b; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    body.dark .calc-row select,
+    body.dark .calc-row input[type=range] { background: #1a1412; color: var(--cream); border-color: #3a2f2a; }
+    body.dark .svc-calc-row select { background: #1a1412; color: var(--cream); border-color: #3a2f2a; }
+    body.dark .award-item        { background: #1e1814; }
+    body.dark .award-item:hover  { background: #2a2018; }
+    body.dark .testimonio-card   { background: #231e1b; border-color: #3a2f2a; }
+    body.dark .service-card      { background: #231e1b; border-color: #3a2f2a; }
+    body.dark .whatsapp-bubble   { background: #231e1b; color: var(--cream); }
+
+    /* ── BOTÓN DARK MODE ── */
+    .nav-dark-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.15rem;
+      padding: 2px 4px;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity .2s, transform .2s;
+      flex-shrink: 0;
+    }
+    .nav-dark-btn:hover { opacity: 1; transform: scale(1.15); }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -55,6 +119,7 @@
       background: var(--cream);
       color: var(--brown);
       overflow-x: hidden;
+      transition: background .3s, color .3s;
     }
 
 
@@ -1333,6 +1398,7 @@
       <button class="active" onclick="setLang('es')" title="Español">🇪🇸</button>
       <button onclick="setLang('en')" title="English">🇺🇸</button>
     </div>
+    <button class="nav-dark-btn" id="dark-toggle" onclick="toggleDark()" title="Modo nocturno">🌙</button>
   </div>
 </nav>
 
@@ -1976,6 +2042,27 @@
 </footer>
 
 <script>
+  // ═══════════════════════════════════════════════
+  // MODO NOCTURNO
+  // ═══════════════════════════════════════════════
+  function toggleDark() {
+    const dark = document.body.classList.toggle('dark');
+    document.getElementById('dark-toggle').textContent = dark ? '☀️' : '🌙';
+    localStorage.setItem('dark', dark ? '1' : '0');
+  }
+  // Aplicar preferencia guardada al cargar
+  (function () {
+    const saved = localStorage.getItem('dark');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (saved === '1' || (saved === null && prefersDark)) {
+      document.body.classList.add('dark');
+      document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('dark-toggle');
+        if (btn) btn.textContent = '☀️';
+      });
+    }
+  })();
+
   // ── LANGUAGE ──
   function setLang(l) {
     document.body.classList.toggle('lang-en', l === 'en');
