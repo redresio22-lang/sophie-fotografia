@@ -184,6 +184,41 @@
     }
     .hero-dot.active { background: var(--gold); transform: scale(1.3); }
 
+    /* ── NAV LANG ── */
+    .nav-lang {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .nav-lang button {
+      background: none;
+      border: none;
+      font-size: 1.15rem;
+      cursor: pointer;
+      opacity: 0.45;
+      transition: opacity .2s, transform .15s;
+      padding: 2px;
+      line-height: 1;
+    }
+    .nav-lang button.active { opacity: 0.9; }
+    .nav-lang button:hover { opacity: 1; transform: scale(1.15); }
+
+    /* ── HERO INTRO ── */
+    #hero-intro {
+      background: var(--cream);
+      text-align: center;
+      padding: 28px 40px 18px;
+    }
+    #hero-intro .hero-logo {
+      width: clamp(200px, 32vw, 320px);
+      margin: 0 auto;
+    }
+    @media(max-width: 768px) {
+      #hero-intro { padding: 18px 24px 12px; }
+      #hero-intro .hero-logo { width: clamp(160px, 55vw, 240px); }
+    }
+
     /* ── HERO BRAND ── */
     #hero-brand {
       background: var(--cream);
@@ -1046,8 +1081,17 @@
       <li><a href="#calendar"><span data-lang="es">Agenda</span><span data-lang="en">Schedule</span></a></li>
       <li><a href="#contact"><span data-lang="es">Contacto</span><span data-lang="en">Contact</span></a></li>
     </ul>
+    <div class="nav-lang">
+      <button class="active" onclick="setLang('es')" title="Español">🇪🇸</button>
+      <button onclick="setLang('en')" title="English">🇺🇸</button>
+    </div>
   </div>
 </nav>
+
+<!-- Hero Intro (logo antes de las fotos) -->
+<section id="hero-intro">
+  <img src="logo.png" alt="Sophie Fotografía" class="hero-logo" />
+</section>
 
 <!-- Hero -->
 <section id="hero">
@@ -1064,7 +1108,6 @@
 
 <!-- Hero Brand -->
 <section id="hero-brand">
-  <img src="logo.png" alt="Sophie Fotografía" class="hero-logo" />
   <h1 class="hero-title">Sophie<br><em>Fotografía</em></h1>
   <p class="hero-sub">
     <span data-lang="es">Fotografía de bodas · Buenos Aires, Argentina</span>
@@ -1593,17 +1636,13 @@
   <p>© 2025 Sophie Fotografía · Ramos Mejía, Buenos Aires, Argentina ·
     <a href="mailto:sophie.resio@gmail.com">sophie.resio@gmail.com</a>
   </p>
-  <div style="margin-top:16px;display:flex;justify-content:center;gap:12px;">
-    <button class="active" onclick="setLang('es')" title="Español" style="background:none;border:none;font-size:1.4rem;cursor:pointer;opacity:0.5;transition:opacity .2s,transform .2s;">🇪🇸</button>
-    <button onclick="setLang('en')" title="English" style="background:none;border:none;font-size:1.4rem;cursor:pointer;opacity:0.5;transition:opacity .2s,transform .2s;">🇺🇸</button>
-  </div>
 </footer>
 
 <script>
   // ── LANGUAGE ──
   function setLang(l) {
     document.body.classList.toggle('lang-en', l === 'en');
-    document.querySelectorAll('footer button').forEach((b,i) => {
+    document.querySelectorAll('.nav-lang button').forEach((b,i) => {
       b.classList.toggle('active', (i===0 && l==='es') || (i===1 && l==='en'));
     });
     document.documentElement.lang = l;
