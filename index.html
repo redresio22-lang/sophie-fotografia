@@ -3,7 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sophie Fotografía | Buenos Aires</title>
+  <title>Sophie Fotografía | Fotógrafa de Bodas y 15 Años · Buenos Aires</title>
+
+  <!-- ═══════════════════════════════════════════════
+       SEO / META TAGS
+       Cambiá description, keywords y la URL de og:url
+       ═══════════════════════════════════════════════ -->
+  <meta name="description" content="Sophie Resio, fotógrafa de bodas, 15 años y eventos en Buenos Aires. Capturo momentos reales con emoción y estilo. Más de 5 años de experiencia y premios nacionales." />
+  <meta name="keywords" content="fotógrafa bodas Buenos Aires, fotografía 15 años, fotógrafa eventos, Sophie Resio, Ramos Mejía, fotografía romántica" />
+  <meta name="author" content="Sophie Resio" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph (preview al compartir en redes) -->
+  <meta property="og:title" content="Sophie Fotografía · Buenos Aires" />
+  <meta property="og:description" content="Fotografía de bodas y 15 años en Buenos Aires. Momentos reales, emociones reales." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://TU-DOMINIO.com" />
+  <meta property="og:image" content="https://TU-DOMINIO.com/logo.png" />
+  <meta property="og:locale" content="es_AR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sophie Fotografía · Buenos Aires" />
+  <meta name="twitter:description" content="Fotografía de bodas y 15 años. Momentos reales, emociones reales." />
+  <meta name="twitter:image" content="https://TU-DOMINIO.com/logo.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -1070,6 +1098,220 @@
     [data-lang-block="es"] { display: block; }
     body.lang-en [data-lang-block="es"] { display: none; }
     body.lang-en [data-lang-block="en"] { display: block; }
+
+    /* ═══════════════════════════════════════════════
+       WHATSAPP FLOTANTE
+       Cambiá el número en el HTML si hace falta
+       ═══════════════════════════════════════════════ */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .whatsapp-bubble {
+      background: var(--white);
+      color: var(--brown);
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 20px 20px 4px 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .3s, transform .3s;
+      pointer-events: none;
+    }
+    .whatsapp-float:hover .whatsapp-bubble {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .whatsapp-btn {
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: transform .2s, box-shadow .2s;
+      text-decoration: none;
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+    }
+    .whatsapp-btn svg { width: 30px; height: 30px; fill: white; }
+    @media(max-width: 600px) {
+      .whatsapp-float { bottom: 18px; right: 16px; }
+      .whatsapp-btn { width: 50px; height: 50px; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       CÓMO TRABAJO — SECCIÓN DE PASOS
+       ═══════════════════════════════════════════════ */
+    #proceso { background: var(--white); }
+    .proceso-inner { max-width: 960px; margin: 0 auto; }
+    .proceso-header { text-align: center; margin-bottom: 64px; }
+    .proceso-header .divider { margin: 0 auto 32px; }
+    .proceso-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .proceso-steps::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--blush), var(--gold), var(--blush));
+    }
+    @media(max-width: 700px) {
+      .proceso-steps { grid-template-columns: 1fr 1fr; gap: 32px 16px; }
+      .proceso-steps::before { display: none; }
+    }
+    @media(max-width: 420px) {
+      .proceso-steps { grid-template-columns: 1fr; gap: 24px; }
+    }
+    .proceso-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 12px;
+      position: relative;
+    }
+    .proceso-num {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      font-size: 1.8rem;
+      transition: background .3s, transform .3s;
+    }
+    .proceso-step:hover .proceso-num {
+      background: var(--gold);
+      transform: scale(1.1);
+    }
+    .proceso-step h4 {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--brown);
+      margin-bottom: 8px;
+    }
+    .proceso-step p {
+      font-size: 12px;
+      line-height: 1.8;
+      color: #8a7a7a;
+    }
+
+    /* ═══════════════════════════════════════════════
+       TESTIMONIOS
+       ═══════════════════════════════════════════════ */
+    #testimonios { background: var(--cream); }
+    .testimonios-inner { max-width: 1100px; margin: 0 auto; }
+    .testimonios-header { text-align: center; margin-bottom: 60px; }
+    .testimonios-header .divider { margin: 0 auto 32px; }
+    .testimonios-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .testimonio-card {
+      background: var(--white);
+      border: 1px solid var(--blush);
+      padding: 32px 28px 24px;
+      position: relative;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .testimonio-card:hover {
+      box-shadow: 0 8px 32px rgba(58,47,47,0.1);
+      transform: translateY(-3px);
+    }
+    .testimonio-quote {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      color: var(--gold);
+      line-height: 0.6;
+      display: block;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    .testimonio-text {
+      font-size: 14px;
+      line-height: 1.85;
+      color: #6b5e5e;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    .testimonio-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid var(--blush);
+      padding-top: 16px;
+    }
+    .testimonio-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .testimonio-info strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--brown);
+    }
+    .testimonio-info span {
+      font-size: 11px;
+      color: #9a8a8a;
+      letter-spacing: 0.5px;
+    }
+    .testimonio-stars {
+      margin-left: auto;
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       ANIMACIONES DE ENTRADA (fade-in al hacer scroll)
+       ═══════════════════════════════════════════════ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-in-delay-1 { transition-delay: .1s; }
+    .fade-in-delay-2 { transition-delay: .2s; }
+    .fade-in-delay-3 { transition-delay: .3s; }
+    .fade-in-delay-4 { transition-delay: .4s; }
   </style>
 </head>
 <body>
@@ -1127,7 +1369,7 @@
 
 <!-- About -->
 <section id="about">
-  <div class="about-inner">
+  <div class="about-inner fade-in">
     <div class="about-img">
       <div class="about-slideshow" id="about-slideshow">
         <div class="about-slide active"><img src="https://bodasargentina.com/wp-content/uploads/2021/05/fff-1-1188x950.jpg" alt="Foto 1" loading="eager" /></div>
@@ -1269,13 +1511,13 @@
 <!-- Services -->
 <section id="services">
   <div class="services-inner">
-    <div class="services-header">
+    <div class="services-header fade-in">
       <span class="section-label"><span data-lang="es">Lo que hago</span><span data-lang="en">What I do</span></span>
       <h2 class="section-title"><span data-lang="es">Otros <em>servicios</em></span><span data-lang="en">Other <em>services</em></span></h2>
       <div class="divider"></div>
     </div>
     <div class="services-grid">
-      <div class="service-card" onclick="openSvcModal('bodas')">
+      <div class="service-card fade-in fade-in-delay-1" onclick="openSvcModal('bodas')">
         <span class="service-icon">💍</span>
         <h3><span data-lang="es">Bodas</span><span data-lang="en">Weddings</span></h3>
         <p><span data-lang="es">Cobertura completa del día más especial. Desde los preparativos hasta el último baile.</span><span data-lang="en">Full coverage of your most special day. From preparations to the last dance.</span></p>
@@ -1338,7 +1580,7 @@
 <!-- Highlights -->
 <section id="highlights">
   <div class="highlights-inner">
-    <div class="highlights-header">
+    <div class="highlights-header fade-in">
       <span class="section-label">Instagram</span>
       <h2 class="section-title">
         <span data-lang="es">Historias <em>destacadas</em></span>
@@ -1384,7 +1626,7 @@
 <!-- Portfolio -->
 <section id="portfolio">
   <div class="portfolio-inner">
-    <div class="portfolio-header">
+    <div class="portfolio-header fade-in">
       <span class="section-label">Portfolio</span>
       <h2 class="section-title">
         <span data-lang="es">Mis <em>mejores</em> momentos</span>
@@ -1458,7 +1700,7 @@
 <!-- Calculator -->
 <section id="calculator">
   <div class="calc-inner">
-    <div class="calc-header">
+    <div class="calc-header fade-in">
       <span class="section-label">
         <span data-lang="es">Calculadora de costos</span>
         <span data-lang="en">Price calculator</span>
@@ -1567,7 +1809,7 @@
 
 <!-- Contact -->
 <section id="contact">
-  <div class="contact-inner">
+  <div class="contact-inner fade-in">
     <div class="contact-info">
       <span class="section-label">
         <span data-lang="es">Contacto</span>
@@ -1603,10 +1845,10 @@
 
     <div class="contact-form">
       <form onsubmit="handleForm(event)">
-        <input type="text" id="f-name" placeholder="Nombre / Name" required />
-        <input type="email" id="f-email" placeholder="Email" required />
-        <input type="text" id="f-date" placeholder="Fecha del evento / Event date" />
-        <textarea id="f-msg" placeholder="¿Cuál es tu historia? / What's your story?"></textarea>
+        <input type="text" id="f-name" name="nombre" placeholder="Nombre / Name" required />
+        <input type="email" id="f-email" name="email" placeholder="Email" required />
+        <input type="text" id="f-date" name="fecha_evento" placeholder="Fecha del evento / Event date" />
+        <textarea id="f-msg" name="mensaje" placeholder="¿Cuál es tu historia? / What's your story?"></textarea>
         <button type="submit" class="btn-send">
           <span data-lang="es">Enviar mensaje</span>
           <span data-lang="en">Send message</span>
@@ -1616,6 +1858,114 @@
     </div>
   </div>
 </section>
+
+<!-- ═══════════════════════════════════════════════
+     CÓMO TRABAJO
+     Editá los 4 pasos: emoji, título y descripción
+     ═══════════════════════════════════════════════ -->
+<section id="proceso">
+  <div class="proceso-inner">
+    <div class="proceso-header fade-in">
+      <span class="section-label"><span data-lang="es">El proceso</span><span data-lang="en">The process</span></span>
+      <h2 class="section-title"><span data-lang="es">¿Cómo <em>trabajamos</em> juntas?</span><span data-lang="en">How do we <em>work</em> together?</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="proceso-steps">
+      <div class="proceso-step fade-in fade-in-delay-1">
+        <div class="proceso-num">✉️</div>
+        <h4><span data-lang="es">1. Me escribís</span><span data-lang="en">1. You reach out</span></h4>
+        <p><span data-lang="es">Contame tu fecha, tu historia y lo que soñás. Sin compromiso.</span><span data-lang="en">Tell me your date, your story, and your dream. No commitment.</span></p>
+      </div>
+      <div class="proceso-step fade-in fade-in-delay-2">
+        <div class="proceso-num">☕</div>
+        <h4><span data-lang="es">2. Nos conocemos</span><span data-lang="en">2. We meet</span></h4>
+        <p><span data-lang="es">Charlamos (por video o en persona) para entender qué necesitás y cómo puedo ayudarte.</span><span data-lang="en">We chat (video or in person) to understand what you need and how I can help.</span></p>
+      </div>
+      <div class="proceso-step fade-in fade-in-delay-3">
+        <div class="proceso-num">📸</div>
+        <h4><span data-lang="es">3. El gran día</span><span data-lang="en">3. The big day</span></h4>
+        <p><span data-lang="es">Estoy ahí desde el principio, discreta, presente y apasionada por cada instante.</span><span data-lang="en">I'm there from the start, discreet, present, and passionate about every moment.</span></p>
+      </div>
+      <div class="proceso-step fade-in fade-in-delay-4">
+        <div class="proceso-num">🎁</div>
+        <h4><span data-lang="es">4. La entrega</span><span data-lang="en">4. Delivery</span></h4>
+        <p><span data-lang="es">Recibís tu galería editada con amor. Un recuerdo que dura para siempre.</span><span data-lang="en">You receive your lovingly edited gallery. A memory that lasts forever.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TESTIMONIOS
+     Agregá, quitá o editá las tarjetas de clientes
+     ═══════════════════════════════════════════════ -->
+<section id="testimonios">
+  <div class="testimonios-inner">
+    <div class="testimonios-header fade-in">
+      <span class="section-label"><span data-lang="es">Lo que dicen</span><span data-lang="en">What they say</span></span>
+      <h2 class="section-title"><span data-lang="es">Clientes que <em>confían</em></span><span data-lang="en">Clients who <em>trust</em></span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="testimonios-grid">
+
+      <div class="testimonio-card fade-in fade-in-delay-1">
+        <span class="testimonio-quote">"</span>
+        <p class="testimonio-text"><span data-lang="es">Sophie captó cada emoción del día con una delicadeza increíble. Las fotos son simplemente mágicas — cada vez que las miro lloro de emoción.</span><span data-lang="en">Sophie captured every emotion of the day with incredible delicacy. The photos are simply magical — every time I look at them I cry with emotion.</span></p>
+        <div class="testimonio-footer">
+          <div class="testimonio-avatar">💑</div>
+          <div class="testimonio-info">
+            <strong>Agustina &amp; Nacho</strong>
+            <span><span data-lang="es">Boda · Mar del Plata</span><span data-lang="en">Wedding · Mar del Plata</span></span>
+          </div>
+          <div class="testimonio-stars">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="testimonio-card fade-in fade-in-delay-2">
+        <span class="testimonio-quote">"</span>
+        <p class="testimonio-text"><span data-lang="es">Desde el primer mensaje sentí que Sophie iba a entender lo que queríamos. Fue discreta, cálida y el resultado superó todas nuestras expectativas.</span><span data-lang="en">From the first message I felt that Sophie would understand what we wanted. She was discreet, warm, and the result exceeded all our expectations.</span></p>
+        <div class="testimonio-footer">
+          <div class="testimonio-avatar">💒</div>
+          <div class="testimonio-info">
+            <strong>Mare &amp; Frank</strong>
+            <span><span data-lang="es">Boda · Buenos Aires</span><span data-lang="en">Wedding · Buenos Aires</span></span>
+          </div>
+          <div class="testimonio-stars">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="testimonio-card fade-in fade-in-delay-3">
+        <span class="testimonio-quote">"</span>
+        <p class="testimonio-text"><span data-lang="es">El book de mi hija quedó hermoso. Sophie tiene un ojo único para capturar la belleza natural. Las fotos parecen de revista. ¡La recomendamos siempre!</span><span data-lang="en">My daughter's portfolio turned out beautiful. Sophie has a unique eye for capturing natural beauty. The photos look like they're from a magazine. We always recommend her!</span></p>
+        <div class="testimonio-footer">
+          <div class="testimonio-avatar">🌸</div>
+          <div class="testimonio-info">
+            <strong>Familia González</strong>
+            <span><span data-lang="es">15 Años · Ramos Mejía</span><span data-lang="en">Quinceañera · Ramos Mejía</span></span>
+          </div>
+          <div class="testimonio-stars">★★★★★</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     WHATSAPP FLOTANTE
+     Cambiá el número: 5491161606582 → tu número con código de país
+     Cambiá el texto del mensaje si querés
+     ═══════════════════════════════════════════════ -->
+<div class="whatsapp-float">
+  <span class="whatsapp-bubble"><span data-lang="es">¡Hablemos por WhatsApp!</span><span data-lang="en">Let's chat on WhatsApp!</span></span>
+  <a class="whatsapp-btn"
+     href="https://wa.me/5491161606582?text=Hola%20Sophie%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20tus%20servicios%20de%20fotograf%C3%ADa%20%F0%9F%93%B8"
+     target="_blank" rel="noopener" title="WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+</div>
 
 <!-- Footer -->
 <footer>
@@ -1880,18 +2230,81 @@
     if (e.target === document.getElementById('svc-modal')) closeSvcModal();
   });
 
-  // ── FORM ──
-  function handleForm(e) {
+  // ═══════════════════════════════════════════════
+  // FORMULARIO DE CONTACTO REAL (Formspree)
+  // Reemplazá YOUR_FORM_ID con tu ID de formspree.io
+  // Creá cuenta gratis en formspree.io → nuevo form → copiá el ID
+  // ═══════════════════════════════════════════════
+  async function handleForm(e) {
     e.preventDefault();
-    const name = document.getElementById('f-name').value;
-    const isEn = document.body.classList.contains('lang-en');
-    const ok = document.getElementById('form-ok');
-    ok.style.display = 'block';
-    ok.textContent = isEn
-      ? `Thank you, ${name}! I'll be in touch soon.`
-      : `¡Gracias, ${name}! Te escribo pronto.`;
-    e.target.reset();
+    const form  = e.target;
+    const name  = document.getElementById('f-name').value;
+    const isEn  = document.body.classList.contains('lang-en');
+    const ok    = document.getElementById('form-ok');
+    const btn   = form.querySelector('.btn-send');
+
+    btn.disabled = true;
+    btn.textContent = isEn ? 'Sending…' : 'Enviando…';
+
+    const FORMSPREE_ID = 'YOUR_FORM_ID'; // ← cambiá esto
+
+    if (FORMSPREE_ID === 'YOUR_FORM_ID') {
+      // Modo demo (sin Formspree configurado)
+      setTimeout(() => {
+        ok.style.display = 'block';
+        ok.textContent = isEn
+          ? `Thank you, ${name}! I'll be in touch soon.`
+          : `¡Gracias, ${name}! Te escribo pronto.`;
+        form.reset();
+        btn.disabled = false;
+        btn.textContent = isEn ? 'Send message' : 'Enviar mensaje';
+      }, 800);
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      if (res.ok) {
+        ok.style.display = 'block';
+        ok.style.color = 'var(--gold)';
+        ok.textContent = isEn
+          ? `Thank you, ${name}! I'll be in touch soon.`
+          : `¡Gracias, ${name}! Te escribo pronto.`;
+        form.reset();
+      } else {
+        throw new Error('error');
+      }
+    } catch {
+      ok.style.display = 'block';
+      ok.style.color = 'var(--rose)';
+      ok.textContent = isEn
+        ? 'Something went wrong. Please try WhatsApp or email.'
+        : 'Algo salió mal. Escribime por WhatsApp o email.';
+    }
+    btn.disabled = false;
+    btn.textContent = isEn ? 'Send message' : 'Enviar mensaje';
   }
+
+  // ═══════════════════════════════════════════════
+  // ANIMACIONES DE ENTRADA (IntersectionObserver)
+  // Las secciones con clase .fade-in aparecen al hacer scroll
+  // ═══════════════════════════════════════════════
+  (function () {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  })();
 </script>
 </body>
 </html>
