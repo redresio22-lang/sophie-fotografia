@@ -96,6 +96,55 @@
     body.dark .service-card      { background: #231e1b; border-color: #3a2f2a; }
     body.dark .whatsapp-bubble   { background: #231e1b; color: var(--cream); }
 
+    /* ── LOGO EN DARK MODE ── */
+    /* El logo en el nav ya tiene invert(1), en dark mode lo revertimos */
+    body.dark .nav-logo          { filter: invert(0) brightness(1.8) sepia(0.2); }
+    body.dark .hero-logo         { filter: brightness(0) invert(1) sepia(0.1); }
+    body.dark footer img         { filter: brightness(0) invert(1) opacity(0.6); }
+
+    /* ═══════════════════════════════════════════════
+       FONDO ESTRELLAS + MONTAÑAS (dark mode)
+       Se activa solo en modo nocturno sobre #hero-brand
+       Cambiá los colores de montaña en .mountain-* si querés otro tono
+       ═══════════════════════════════════════════════ */
+    body.dark #hero-brand {
+      background: linear-gradient(to bottom, #0a0814 0%, #1a1020 40%, #2a1a1a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    body.dark #hero-brand .hero-title  { color: #e8d5c4; }
+    body.dark #hero-brand .hero-sub    { color: rgba(201,169,110,0.7); }
+    body.dark #hero-brand .btn-hero    { border-color: var(--gold); color: #e8d5c4; }
+
+    /* Canvas de estrellas */
+    #stars-canvas {
+      display: none;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body.dark #stars-canvas { display: block; }
+
+    /* Montañas SVG */
+    .mountains-bg {
+      display: none;
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    body.dark .mountains-bg { display: block; }
+
+    /* Contenido por encima de montañas */
+    body.dark #hero-brand > *:not(#stars-canvas):not(.mountains-bg) {
+      position: relative;
+      z-index: 2;
+    }
+
     /* ── BOTÓN DARK MODE ── */
     .nav-dark-btn {
       background: none;
@@ -1422,6 +1471,26 @@
 
 <!-- Hero Brand -->
 <section id="hero-brand">
+  <!-- Estrellas (canvas, solo visible en dark mode) -->
+  <canvas id="stars-canvas"></canvas>
+  <!-- Montañas (SVG, solo visible en dark mode) -->
+  <svg class="mountains-bg" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- montaña trasera izquierda -->
+    <polygon points="0,320 0,180 180,60 360,170 500,320" fill="#1a1228" opacity="0.9"/>
+    <!-- montaña trasera derecha -->
+    <polygon points="900,320 1050,80 1200,140 1440,50 1440,320" fill="#1a1228" opacity="0.9"/>
+    <!-- montaña media -->
+    <polygon points="200,320 380,100 560,180 700,320" fill="#221830" opacity="0.95"/>
+    <polygon points="700,320 820,130 960,70 1100,150 1240,320" fill="#221830" opacity="0.95"/>
+    <!-- montaña delantera -->
+    <polygon points="0,320 120,220 300,140 480,200 620,320" fill="#2a1a22"/>
+    <polygon points="580,320 720,160 880,100 1040,180 1200,320" fill="#2a1a22"/>
+    <polygon points="1100,320 1260,200 1440,130 1440,320" fill="#2a1a22"/>
+    <!-- nieve en picos -->
+    <polygon points="300,140 320,120 340,140" fill="rgba(232,213,196,0.25)"/>
+    <polygon points="880,100 900,78 920,100" fill="rgba(232,213,196,0.25)"/>
+    <polygon points="1440,130 1430,110 1440,130" fill="rgba(232,213,196,0.2)"/>
+  </svg>
   <h1 class="hero-title">Sophie<br><em>Fotografía</em></h1>
   <p class="hero-sub">
     <span data-lang="es">Fotografía de bodas · Buenos Aires, Argentina</span>
@@ -2043,13 +2112,81 @@
 
 <script>
   // ═══════════════════════════════════════════════
-  // MODO NOCTURNO
+  // MODO NOCTURNO + ESTRELLAS
   // ═══════════════════════════════════════════════
+
+  // ── Estrellas animadas (canvas) ──
+  (function () {
+    const canvas = document.getElementById('stars-canvas');
+    const ctx    = canvas.getContext('2d');
+    let stars    = [];
+    let raf;
+
+    function resize() {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+    function makeStars(n) {
+      stars = [];
+      for (let i = 0; i < n; i++) {
+        stars.push({
+          x:       Math.random() * canvas.width,
+          y:       Math.random() * canvas.height * 0.75,
+          r:       Math.random() * 1.4 + 0.3,
+          alpha:   Math.random(),
+          speed:   Math.random() * 0.008 + 0.003,
+          dir:     Math.random() > 0.5 ? 1 : -1
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.alpha += s.speed * s.dir;
+        if (s.alpha >= 1 || s.alpha <= 0.1) s.dir *= -1;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 245, 230, ${s.alpha})`;
+        ctx.fill();
+      });
+      if (document.body.classList.contains('dark')) {
+        raf = requestAnimationFrame(draw);
+      }
+    }
+
+    function startStars() {
+      resize();
+      makeStars(180);
+      cancelAnimationFrame(raf);
+      draw();
+    }
+
+    function stopStars() {
+      cancelAnimationFrame(raf);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    window.addEventListener('resize', () => {
+      if (document.body.classList.contains('dark')) startStars();
+    });
+
+    window.__startStars = startStars;
+    window.__stopStars  = stopStars;
+
+    // Arrancar si ya está en dark al cargar
+    if (document.body.classList.contains('dark')) startStars();
+  })();
+
   function toggleDark() {
     const dark = document.body.classList.toggle('dark');
     document.getElementById('dark-toggle').textContent = dark ? '☀️' : '🌙';
     localStorage.setItem('dark', dark ? '1' : '0');
+    if (dark) window.__startStars && window.__startStars();
+    else       window.__stopStars  && window.__stopStars();
   }
+
   // Aplicar preferencia guardada al cargar
   (function () {
     const saved = localStorage.getItem('dark');
