@@ -100,41 +100,36 @@
       transition: color .2s;
     }
     nav ul li a:hover { color: var(--gold); }
-    .nav-hamburger {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--white);
-      font-size: 1.7rem;
-      cursor: pointer;
-      z-index: 1001;
-      line-height: 1;
-      padding: 4px;
-    }
+    .nav-hamburger { display: none; }
     @media(max-width: 768px) {
-      nav { padding: 12px 20px; }
-      nav.scrolled { padding: 10px 20px; }
-      .nav-logo { height: 50px; filter: invert(1) brightness(2); }
-      nav.scrolled .nav-logo { height: 40px; }
-      .nav-hamburger { display: flex; }
-      .nav-menu {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(40,30,30,0.97);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 32px;
-        z-index: 998;
+      nav {
+        flex-wrap: wrap;
+        padding: 10px 16px 4px;
+        gap: 0;
       }
-      .nav-menu.open { display: flex; }
-      nav ul { flex-direction: column; align-items: center; gap: 28px; }
-      nav ul li a { font-size: 13px; letter-spacing: 3px; }
-      .nav-lang { gap: 16px; }
-      .nav-lang button { font-size: 2rem; opacity: 0.6; }
-      .nav-lang button.active,
-      .nav-lang button:hover { opacity: 1; transform: scale(1.2); }
+      nav.scrolled { padding: 8px 16px 4px; }
+      .nav-logo-wrap { flex: 1; }
+      .nav-logo { height: 46px; filter: invert(1) brightness(2); }
+      nav.scrolled .nav-logo { height: 36px; }
+      .nav-menu {
+        width: 100%;
+        margin-top: 6px;
+        gap: 0;
+        overflow: hidden;
+      }
+      nav ul {
+        flex: 1;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 18px;
+        padding-bottom: 6px;
+      }
+      nav ul::-webkit-scrollbar { display: none; }
+      nav ul li a { font-size: 10px; letter-spacing: 1.5px; white-space: nowrap; }
+      .nav-lang { flex-shrink: 0; padding-left: 10px; }
+      .nav-lang button { font-size: 1.3rem; }
     }
     /* ── HERO ── */
     #hero {
@@ -1064,20 +1059,19 @@
   <a href="#hero" class="nav-logo-wrap"><img src="logo.png" alt="Sophie Fotografía" class="nav-logo" /></a>
   <div class="nav-menu" id="nav-menu">
     <ul>
-      <li><a href="#about" onclick="closeMenu()"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span></a></li>
-      <li><a href="#services" onclick="closeMenu()"><span data-lang="es">Servicios</span><span data-lang="en">Services</span></a></li>
-      <li><a href="#portfolio" onclick="closeMenu()"><span data-lang="es">Portafolio</span><span data-lang="en">Portfolio</span></a></li>
-      <li><a href="#highlights" onclick="closeMenu()"><span data-lang="es">Historias</span><span data-lang="en">Stories</span></a></li>
-      <li><a href="#calculator" onclick="closeMenu()"><span data-lang="es">Precios</span><span data-lang="en">Pricing</span></a></li>
-      <li><a href="#calendar" onclick="closeMenu()"><span data-lang="es">Agenda</span><span data-lang="en">Schedule</span></a></li>
-      <li><a href="#contact" onclick="closeMenu()"><span data-lang="es">Contacto</span><span data-lang="en">Contact</span></a></li>
+      <li><a href="#about"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span></a></li>
+      <li><a href="#services"><span data-lang="es">Servicios</span><span data-lang="en">Services</span></a></li>
+      <li><a href="#portfolio"><span data-lang="es">Portafolio</span><span data-lang="en">Portfolio</span></a></li>
+      <li><a href="#highlights"><span data-lang="es">Historias</span><span data-lang="en">Stories</span></a></li>
+      <li><a href="#calculator"><span data-lang="es">Precios</span><span data-lang="en">Pricing</span></a></li>
+      <li><a href="#calendar"><span data-lang="es">Agenda</span><span data-lang="en">Schedule</span></a></li>
+      <li><a href="#contact"><span data-lang="es">Contacto</span><span data-lang="en">Contact</span></a></li>
     </ul>
     <div class="nav-lang">
       <button class="active" onclick="setLang('es')" title="Español">🇪🇸</button>
       <button onclick="setLang('en')" title="English">🇺🇸</button>
     </div>
   </div>
-  <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMenu()">☰</button>
 </nav>
 
 <!-- Hero -->
@@ -1642,21 +1636,6 @@
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
   });
 
-  // ── MOBILE MENU ──
-  function toggleMenu() {
-    const menu = document.getElementById('nav-menu');
-    const btn  = document.getElementById('nav-hamburger');
-    const open = menu.classList.toggle('open');
-    btn.textContent = open ? '✕' : '☰';
-    document.body.style.overflow = open ? 'hidden' : '';
-  }
-  function closeMenu() {
-    const menu = document.getElementById('nav-menu');
-    const btn  = document.getElementById('nav-hamburger');
-    menu.classList.remove('open');
-    btn.textContent = '☰';
-    document.body.style.overflow = '';
-  }
 
   // ── AWARDS MORE ──
   function toggleAwardsMore() {
