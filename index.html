@@ -29,27 +29,6 @@
       overflow-x: hidden;
     }
 
-    /* ── LANGUAGE SWITCHER ── */
-    .nav-lang {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-    }
-    .nav-lang button {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      opacity: 0.45;
-      transition: opacity .2s, transform .2s;
-      padding: 2px 4px;
-      line-height: 1;
-    }
-    .nav-lang button.active,
-    .nav-lang button:hover {
-      opacity: 1;
-      transform: scale(1.2);
-    }
 
     /* ── NAV ── */
     nav {
@@ -1067,10 +1046,6 @@
       <li><a href="#calendar"><span data-lang="es">Agenda</span><span data-lang="en">Schedule</span></a></li>
       <li><a href="#contact"><span data-lang="es">Contacto</span><span data-lang="en">Contact</span></a></li>
     </ul>
-    <div class="nav-lang">
-      <button class="active" onclick="setLang('es')" title="Español">🇪🇸</button>
-      <button onclick="setLang('en')" title="English">🇺🇸</button>
-    </div>
   </div>
 </nav>
 
@@ -1614,17 +1589,21 @@
 
 <!-- Footer -->
 <footer>
-  <img src="logo.png" alt="Sophie Fotografía" style="height:60px;background:rgba(255,255,255,0.12);border-radius:6px;padding:4px 10px;margin-bottom:14px;display:block;margin-left:auto;margin-right:auto;" />
+  <img src="logo.png" alt="Sophie Fotografía" style="height:60px;border-radius:6px;padding:4px 10px;margin-bottom:14px;display:block;margin-left:auto;margin-right:auto;" />
   <p>© 2025 Sophie Fotografía · Ramos Mejía, Buenos Aires, Argentina ·
     <a href="mailto:sophie.resio@gmail.com">sophie.resio@gmail.com</a>
   </p>
+  <div style="margin-top:16px;display:flex;justify-content:center;gap:12px;">
+    <button class="active" onclick="setLang('es')" title="Español" style="background:none;border:none;font-size:1.4rem;cursor:pointer;opacity:0.5;transition:opacity .2s,transform .2s;">🇪🇸</button>
+    <button onclick="setLang('en')" title="English" style="background:none;border:none;font-size:1.4rem;cursor:pointer;opacity:0.5;transition:opacity .2s,transform .2s;">🇺🇸</button>
+  </div>
 </footer>
 
 <script>
   // ── LANGUAGE ──
   function setLang(l) {
     document.body.classList.toggle('lang-en', l === 'en');
-    document.querySelectorAll('.nav-lang button').forEach((b,i) => {
+    document.querySelectorAll('footer button').forEach((b,i) => {
       b.classList.toggle('active', (i===0 && l==='es') || (i===1 && l==='en'));
     });
     document.documentElement.lang = l;
