@@ -111,10 +111,16 @@
     .hero-slide {
       position: absolute;
       inset: 0;
-      background-size: cover;
-      background-position: center;
       opacity: 0;
       transition: opacity 1.4s ease-in-out;
+      overflow: hidden;
+    }
+    .hero-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
     .hero-slide.active { opacity: 1; }
     .hero-overlay {
@@ -300,10 +306,16 @@
     .about-slide {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background-size: cover;
-      background-position: center;
       opacity: 0;
       transition: opacity 1.2s ease-in-out;
+      overflow: hidden;
+    }
+    .about-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
       filter: sepia(8%) saturate(88%);
     }
     .about-slide.active { opacity: 1; }
@@ -1033,11 +1045,11 @@
 
 <!-- Hero -->
 <section id="hero">
-  <div class="hero-slide active" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Y-Fabri-1-1200x801.jpg')"></div>
-  <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Anto-Y-Lea-2-1188x950.jpg')"></div>
-  <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Vivi-Julio-5-1200x801.jpg')"></div>
-  <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/ASDA-111-1200x801.jpg')"></div>
-  <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Fabri-40-1200x801.jpg')"></div>
+  <div class="hero-slide active"><img src="https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Y-Fabri-1-1200x801.jpg" alt="Maca y Fabri" loading="eager" /></div>
+  <div class="hero-slide"><img src="https://bodasargentina.com/wp-content/uploads/2021/05/Anto-Y-Lea-2-1188x950.jpg" alt="Anto y Lea" loading="lazy" /></div>
+  <div class="hero-slide"><img src="https://bodasargentina.com/wp-content/uploads/2021/05/Vivi-Julio-5-1200x801.jpg" alt="Vivi y Julio" loading="lazy" /></div>
+  <div class="hero-slide"><img src="https://bodasargentina.com/wp-content/uploads/2021/05/ASDA-111-1200x801.jpg" alt="ASDA" loading="lazy" /></div>
+  <div class="hero-slide"><img src="https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Fabri-40-1200x801.jpg" alt="Maca y Fabri 2" loading="lazy" /></div>
   <div class="hero-overlay"></div>
   <button class="hero-arrow hero-prev" onclick="heroNav(-1)">&#8249;</button>
   <button class="hero-arrow hero-next" onclick="heroNav(1)">&#8250;</button>
@@ -1063,11 +1075,11 @@
   <div class="about-inner">
     <div class="about-img">
       <div class="about-slideshow" id="about-slideshow">
-        <div class="about-slide active" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/fff-1-1188x950.jpg')"></div>
-        <div class="about-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Fabri-33-634x950.jpg')"></div>
-        <div class="about-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/08/01-Los-Novios-sophie.resio@gmail.com-Sophie-Resio-9-634x950.jpg')"></div>
-        <div class="about-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Clary-1188x950.jpg')"></div>
-        <div class="about-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/08/02-Los-Novios-sophie.resio@gmail.com-Sophie-Resio-4-634x950.jpg')"></div>
+        <div class="about-slide active"><img src="https://bodasargentina.com/wp-content/uploads/2021/05/fff-1-1188x950.jpg" alt="Foto 1" loading="eager" /></div>
+        <div class="about-slide"><img src="https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Fabri-33-634x950.jpg" alt="Maca y Fabri" loading="lazy" /></div>
+        <div class="about-slide"><img src="https://bodasargentina.com/wp-content/uploads/2021/08/01-Los-Novios-sophie.resio@gmail.com-Sophie-Resio-9-634x950.jpg" alt="Los novios" loading="lazy" /></div>
+        <div class="about-slide"><img src="https://bodasargentina.com/wp-content/uploads/2021/05/Clary-1188x950.jpg" alt="Clary" loading="lazy" /></div>
+        <div class="about-slide"><img src="https://bodasargentina.com/wp-content/uploads/2021/08/02-Los-Novios-sophie.resio@gmail.com-Sophie-Resio-4-634x950.jpg" alt="Los novios 2" loading="lazy" /></div>
       </div>
     </div>
     <div class="about-text">
