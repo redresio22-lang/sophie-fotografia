@@ -30,30 +30,25 @@
     }
 
     /* ── LANGUAGE SWITCHER ── */
-    #lang-switcher {
-      position: fixed;
-      top: 18px;
-      right: 24px;
-      z-index: 1000;
+    .nav-lang {
       display: flex;
-      gap: 6px;
+      gap: 4px;
+      align-items: center;
     }
-    #lang-switcher button {
-      background: rgba(249,243,238,0.85);
-      border: 1px solid var(--gold);
-      color: var(--brown);
-      font-family: var(--font-sans);
-      font-size: 11px;
-      letter-spacing: 1px;
-      padding: 5px 10px;
+    .nav-lang button {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
       cursor: pointer;
-      border-radius: 2px;
-      transition: all .2s;
+      opacity: 0.45;
+      transition: opacity .2s, transform .2s;
+      padding: 2px 4px;
+      line-height: 1;
     }
-    #lang-switcher button.active,
-    #lang-switcher button:hover {
-      background: var(--gold);
-      color: var(--white);
+    .nav-lang button.active,
+    .nav-lang button:hover {
+      opacity: 1;
+      transform: scale(1.2);
     }
 
     /* ── NAV ── */
@@ -82,12 +77,16 @@
     }
     nav.scrolled .nav-logo-wrap { padding: 2px 6px; }
     .nav-logo {
-      height: 46px;
+      height: 62px;
       width: auto;
       display: block;
       transition: height .4s;
     }
-    nav.scrolled .nav-logo { height: 36px; }
+    nav.scrolled .nav-logo { height: 48px; }
+    @media(max-width: 768px) {
+      .nav-logo { height: 50px; }
+      nav.scrolled .nav-logo { height: 40px; }
+    }
     nav ul {
       list-style: none;
       display: flex;
@@ -103,21 +102,10 @@
       transition: color .2s;
     }
     nav ul li a:hover { color: var(--gold); }
-    .hero-logo {
-      width: clamp(130px, 22vw, 200px);
-      margin-bottom: 16px;
-      background: rgba(255,255,255,0.88);
-      border-radius: 8px;
-      padding: 8px 16px;
-    }
-
     /* ── HERO ── */
     #hero {
       position: relative;
       height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       overflow: hidden;
     }
     .hero-slide {
@@ -132,37 +120,88 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(30,20,20,0.38);
+      background: rgba(30,20,20,0.2);
     }
-    .hero-content {
-      position: relative;
-      text-align: center;
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.35);
       color: var(--white);
-      padding: 0 20px;
+      font-size: 2.2rem;
+      width: 52px;
+      height: 52px;
+      cursor: pointer;
+      z-index: 10;
+      transition: background .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      line-height: 1;
     }
-    .hero-content h1 {
+    .hero-arrow:hover { background: rgba(255,255,255,0.35); }
+    .hero-prev { left: 20px; }
+    .hero-next { right: 20px; }
+    @media(max-width: 600px) {
+      .hero-prev { left: 10px; }
+      .hero-next { right: 10px; }
+      .hero-arrow { width: 40px; height: 40px; font-size: 1.6rem; }
+    }
+    .hero-dots {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+    .hero-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      border: none;
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+      padding: 0;
+    }
+    .hero-dot.active { background: var(--gold); transform: scale(1.3); }
+
+    /* ── HERO BRAND ── */
+    #hero-brand {
+      background: var(--cream);
+      text-align: center;
+      padding: 70px 40px 60px;
+    }
+    .hero-logo {
+      width: clamp(180px, 30vw, 280px);
+      display: block;
+      margin: 0 auto 28px;
+    }
+    .hero-title {
       font-family: var(--font-serif);
-      font-size: clamp(3rem, 8vw, 7rem);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
       font-weight: 300;
       letter-spacing: 4px;
       line-height: 1.1;
+      color: var(--brown);
       margin-bottom: 16px;
     }
-    .hero-content h1 em {
-      font-style: italic;
-      color: var(--blush);
-    }
-    .hero-content p {
+    .hero-title em { font-style: italic; color: var(--gold-dark); }
+    .hero-sub {
       font-size: 12px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--blush);
-      margin-bottom: 40px;
+      color: #8a7a7a;
+      margin-bottom: 36px;
     }
     .btn-hero {
       display: inline-block;
       border: 1px solid var(--gold);
-      color: var(--white);
+      color: var(--brown);
       text-decoration: none;
       font-size: 11px;
       letter-spacing: 2px;
@@ -170,7 +209,11 @@
       padding: 14px 36px;
       transition: all .3s;
     }
-    .btn-hero:hover { background: var(--gold); }
+    .btn-hero:hover { background: var(--gold); color: var(--white); }
+    @media(max-width: 768px) {
+      .hero-logo { width: clamp(150px, 55vw, 220px); }
+      #hero-brand { padding: 50px 24px 40px; }
+    }
 
     .scroll-hint {
       position: absolute;
@@ -970,12 +1013,6 @@
 </head>
 <body>
 
-<!-- Language switcher -->
-<div id="lang-switcher">
-  <button class="active" onclick="setLang('es')">ES</button>
-  <button onclick="setLang('en')">EN</button>
-</div>
-
 <!-- Navigation -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo-wrap"><img src="logo.png" alt="Sophie Fotografía" class="nav-logo" /></a>
@@ -988,6 +1025,10 @@
     <li><a href="#calendar"><span data-lang="es">Agenda</span><span data-lang="en">Schedule</span></a></li>
     <li><a href="#contact"><span data-lang="es">Contacto</span><span data-lang="en">Contact</span></a></li>
   </ul>
+  <div class="nav-lang">
+    <button class="active" onclick="setLang('es')" title="Español">🇪🇸</button>
+    <button onclick="setLang('en')" title="English">🇺🇸</button>
+  </div>
 </nav>
 
 <!-- Hero -->
@@ -998,19 +1039,23 @@
   <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/ASDA-111-1200x801.jpg')"></div>
   <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Fabri-40-1200x801.jpg')"></div>
   <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <img src="logo.png" alt="Sophie Fotografía" class="hero-logo" />
-    <h1>Sophie<br><em>Fotografía</em></h1>
-    <p>
-      <span data-lang="es">Fotografía de bodas · Buenos Aires, Argentina</span>
-      <span data-lang="en">Wedding Photography · Buenos Aires, Argentina</span>
-    </p>
-    <a href="#portfolio" class="btn-hero">
-      <span data-lang="es">Ver mi trabajo</span>
-      <span data-lang="en">See my work</span>
-    </a>
-  </div>
-  <div class="scroll-hint">scroll</div>
+  <button class="hero-arrow hero-prev" onclick="heroNav(-1)">&#8249;</button>
+  <button class="hero-arrow hero-next" onclick="heroNav(1)">&#8250;</button>
+  <div class="hero-dots" id="hero-dots"></div>
+</section>
+
+<!-- Hero Brand -->
+<section id="hero-brand">
+  <img src="logo.png" alt="Sophie Fotografía" class="hero-logo" />
+  <h1 class="hero-title">Sophie<br><em>Fotografía</em></h1>
+  <p class="hero-sub">
+    <span data-lang="es">Fotografía de bodas · Buenos Aires, Argentina</span>
+    <span data-lang="en">Wedding Photography · Buenos Aires, Argentina</span>
+  </p>
+  <a href="#portfolio" class="btn-hero">
+    <span data-lang="es">Ver mi trabajo</span>
+    <span data-lang="en">See my work</span>
+  </a>
 </section>
 
 <!-- About -->
@@ -1536,7 +1581,7 @@
   // ── LANGUAGE ──
   function setLang(l) {
     document.body.classList.toggle('lang-en', l === 'en');
-    document.querySelectorAll('#lang-switcher button').forEach((b,i) => {
+    document.querySelectorAll('.nav-lang button').forEach((b,i) => {
       b.classList.toggle('active', (i===0 && l==='es') || (i===1 && l==='en'));
     });
     document.documentElement.lang = l;
@@ -1570,11 +1615,40 @@
   // ── HERO SLIDESHOW ──
   const slides = document.querySelectorAll('.hero-slide');
   let cur = 0;
-  setInterval(() => {
+  let heroTimer;
+
+  function heroGoTo(n) {
     slides[cur].classList.remove('active');
-    cur = (cur + 1) % slides.length;
+    cur = (n + slides.length) % slides.length;
     slides[cur].classList.add('active');
-  }, 4500);
+    document.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+  function heroNav(dir) {
+    clearInterval(heroTimer);
+    heroGoTo(cur + dir);
+    heroTimer = setInterval(() => heroGoTo(cur + 1), 4500);
+  }
+
+  // Generar dots
+  const dotsEl = document.getElementById('hero-dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Foto ' + (i + 1));
+    d.onclick = () => { clearInterval(heroTimer); heroGoTo(i); heroTimer = setInterval(() => heroGoTo(cur + 1), 4500); };
+    dotsEl.appendChild(d);
+  });
+
+  heroTimer = setInterval(() => heroGoTo(cur + 1), 4500);
+
+  // Swipe táctil
+  let tsX = 0;
+  const heroEl = document.getElementById('hero');
+  heroEl.addEventListener('touchstart', e => { tsX = e.touches[0].clientX; }, {passive: true});
+  heroEl.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tsX;
+    if (Math.abs(dx) > 50) heroNav(dx < 0 ? 1 : -1);
+  }, {passive: true});
 
   // ── LIGHTBOX ──
   const galleryImgs = Array.from(document.querySelectorAll('.masonry-item img')).map(i => i.src);
