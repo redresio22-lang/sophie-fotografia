@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sophie Fotografía | Buenos Aires</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f9f3ee;
+      --gold: #c9a96e;
+      --gold-dark: #a8844e;
+      --brown: #3a2f2f;
+      --blush: #e8d5c4;
+      --rose: #b87b6e;
+      --white: #ffffff;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Montserrat', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--cream);
+      color: var(--brown);
+      overflow-x: hidden;
+    }
+
+    /* ── LANGUAGE SWITCHER ── */
+    #lang-switcher {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      gap: 6px;
+    }
+    #lang-switcher button {
+      background: rgba(249,243,238,0.85);
+      border: 1px solid var(--gold);
+      color: var(--brown);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all .2s;
+    }
+    #lang-switcher button.active,
+    #lang-switcher button:hover {
+      background: var(--gold);
+      color: var(--white);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      background: linear-gradient(to bottom, rgba(58,47,47,0.55) 0%, transparent 100%);
+      transition: background .4s;
+    }
+    nav.scrolled {
+      background: rgba(58,47,47,0.92);
+      padding: 10px 40px;
+    }
+    .nav-logo-wrap {
+      background: rgba(255,255,255,0.92);
+      border-radius: 6px;
+      padding: 3px 8px;
+      display: flex;
+      align-items: center;
+      transition: all .4s;
+    }
+    nav.scrolled .nav-logo-wrap { padding: 2px 6px; }
+    .nav-logo {
+      height: 46px;
+      width: auto;
+      display: block;
+      transition: height .4s;
+    }
+    nav.scrolled .nav-logo { height: 36px; }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: var(--cream);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    nav ul li a:hover { color: var(--gold); }
+    .hero-logo {
+      width: clamp(130px, 22vw, 200px);
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.88);
+      border-radius: 8px;
+      padding: 8px 16px;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.4s ease-in-out;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(30,20,20,0.38);
+    }
+    .hero-content {
+      position: relative;
+      text-align: center;
+      color: var(--white);
+      padding: 0 20px;
+    }
+    .hero-content h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 300;
+      letter-spacing: 4px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero-content h1 em {
+      font-style: italic;
+      color: var(--blush);
+    }
+    .hero-content p {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 40px;
+    }
+    .btn-hero {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      transition: all .3s;
+    }
+    .btn-hero:hover { background: var(--gold); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.6);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    .scroll-hint::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.4);
+    }
+    @keyframes bounce {
+      0%,100%{ transform: translateX(-50%) translateY(0); }
+      50%{ transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 40px; }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+    .section-title em { font-style: italic; }
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 32px;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--white);
+    }
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-img {
+      position: relative;
+    }
+    .about-img::before {
+      content: '';
+      position: absolute;
+      top: -16px; left: -16px;
+      right: 16px; bottom: 16px;
+      border: 1px solid var(--gold);
+      z-index: 0;
+    }
+    .about-slideshow {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding-top: 100%; /* fuerza cuadrado */
+      overflow: hidden;
+    }
+    .about-slide {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+      filter: sepia(8%) saturate(88%);
+    }
+    .about-slide.active { opacity: 1; }
+
+    /* ── QUOTE STRIP ── */
+    #quote-strip {
+      background: var(--brown);
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .quote-strip-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .quote-strip-inner blockquote {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .quote-strip-inner blockquote::before { content: '\201C'; color: var(--gold); }
+    .quote-strip-inner blockquote::after  { content: '\201D'; color: var(--gold); }
+    .quote-strip-inner cite {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-style: normal;
+    }
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(201,169,110,0.2);
+      padding-top: 40px;
+    }
+    .stat-item { text-align: center; }
+    .stat-item .num {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: 2.6rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-item .lbl {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(232,213,196,0.6);
+    }
+    .about-text p {
+      font-size: 15px;
+      line-height: 1.9;
+      color: #6b5e5e;
+      margin-bottom: 20px;
+    }
+    .about-text .signature {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--gold-dark);
+      margin-top: 16px;
+    }
+    /* Awards redesign */
+    .awards-block {
+      margin-top: 40px;
+      border-top: 1px solid var(--blush);
+      padding-top: 28px;
+    }
+    .awards-title {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .awards-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--blush);
+    }
+    .award-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .award-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 14px;
+      background: var(--cream);
+      border-left: 3px solid var(--gold);
+      transition: background .2s;
+    }
+    .award-item:hover { background: var(--blush); }
+    .award-medal {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--gold);
+      min-width: 36px;
+      text-align: center;
+      line-height: 1;
+    }
+    .award-medal.gold   { color: #c9a96e; }
+    .award-medal.silver { color: #9e9e9e; }
+    .award-medal.bronze { color: #b87333; }
+    .award-info {
+      flex: 1;
+    }
+    .award-info strong {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--brown);
+      letter-spacing: .3px;
+    }
+    .award-info span {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #9a8a8a;
+    }
+    .award-year {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: #bba88a;
+      font-style: italic;
+    }
+    .awards-more-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #bbb;
+      cursor: pointer;
+      margin-top: 10px;
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .2s;
+    }
+    .awards-more-btn:hover { color: var(--gold); }
+    .awards-more-btn .arr { transition: transform .3s; font-size: 10px; }
+    .awards-more-btn.open .arr { transform: rotate(180deg); }
+    .awards-more {
+      display: none;
+      margin-top: 8px;
+      opacity: 0.75;
+    }
+    .awards-more.open { display: flex; }
+    .awards-more .award-item { background: #fafafa; }
+    .awards-more .award-medal { font-size: 1rem; color: #aaa; }
+    .awards-more .award-info strong { font-size: 11px; color: #888; }
+    .awards-more .award-info span { font-size: 9px; }
+    .awards-more .award-year { font-size: 0.85rem; color: #ccc; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--cream); }
+    .services-inner { max-width: 1100px; margin: 0 auto; }
+    .services-header { text-align: center; margin-bottom: 60px; }
+    .services-header .divider { margin: 0 auto 32px; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--blush);
+      padding: 40px 28px 28px;
+      text-align: center;
+      transition: box-shadow .3s, transform .3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blush), var(--gold));
+      transform: scaleX(0);
+      transition: transform .35s;
+    }
+    .service-card:hover { box-shadow: 0 8px 32px rgba(58,47,47,0.12); transform: translateY(-4px); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon { font-size: 2.4rem; margin-bottom: 18px; display: block; }
+    .service-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--brown);
+      margin-bottom: 12px;
+    }
+    .service-card p { font-size: 13px; line-height: 1.8; color: #8a7a7a; margin-bottom: 20px; flex: 1; }
+    .service-cta {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 7px 18px;
+      margin-top: auto;
+      transition: all .25s;
+    }
+    .service-card:hover .service-cta { background: var(--gold); color: var(--white); }
+
+    /* ── SERVICE MODAL ── */
+    #svc-modal {
+      position: fixed; inset: 0; z-index: 3000;
+      background: rgba(30,20,20,0.7);
+      display: none; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    #svc-modal.open { display: flex; }
+    .svc-modal-box {
+      background: var(--white);
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 3px;
+      position: relative;
+    }
+    .svc-modal-header {
+      background: var(--brown);
+      color: var(--cream);
+      padding: 28px 32px 20px;
+      position: sticky; top: 0; z-index: 1;
+    }
+    .svc-modal-header .svc-icon { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+    .svc-modal-header h3 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 300;
+    }
+    .svc-modal-close {
+      position: absolute; top: 16px; right: 20px;
+      background: none; border: none;
+      color: var(--cream); font-size: 1.4rem; cursor: pointer;
+    }
+    .svc-modal-body { padding: 28px 32px; }
+    .svc-calc-row {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      margin-bottom: 14px;
+    }
+    .svc-calc-row label { font-size: 13px; color: #6b5e5e; flex: 1; }
+    .svc-calc-row select,
+    .svc-calc-row input[type=range] {
+      font-family: var(--font-sans); font-size: 12px;
+      padding: 7px 10px; border: 1px solid var(--blush);
+      border-radius: 2px; background: var(--cream);
+      color: var(--brown); width: 160px;
+    }
+    .svc-calc-row input[type=range] { padding: 0; accent-color: var(--gold); }
+    .svc-range-val {
+      font-family: var(--font-serif); font-size: 1rem;
+      color: var(--gold-dark); min-width: 48px; text-align: right;
+    }
+    /* Opcionales acordeón */
+    .svc-extras-toggle {
+      width: 100%; background: none; border: none;
+      border-top: 1px solid var(--blush);
+      padding: 12px 0; text-align: left;
+      font-family: var(--font-sans); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #aaa; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 8px;
+    }
+    .svc-extras-toggle:hover { color: var(--gold); }
+    .svc-extras-toggle .arr { transition: transform .3s; font-size: 10px; }
+    .svc-extras-toggle.open .arr { transform: rotate(180deg); }
+    .svc-extras-body {
+      display: none; padding-top: 12px;
+    }
+    .svc-extras-body.open { display: block; }
+    .svc-extras-body .svc-calc-row label { font-size: 12px; color: #aaa; }
+    .svc-extras-body .svc-calc-row select { background: #fafafa; color: #999; font-size: 12px; }
+    /* Total in modal */
+    .svc-total-bar {
+      background: var(--cream);
+      border: 1px solid var(--blush);
+      border-radius: 2px;
+      padding: 18px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin: 20px 0 0;
+    }
+    .svc-total-bar .tl {
+      font-size: 10px; letter-spacing: 2px;
+      text-transform: uppercase; color: #aaa;
+    }
+    .svc-total-bar .ta {
+      font-family: var(--font-serif); font-size: 2rem; color: var(--gold);
+    }
+    .svc-modal-actions {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      padding: 0 32px 28px;
+    }
+    .svc-btn-cal {
+      flex: 1; text-align: center;
+      background: var(--gold); color: var(--white);
+      text-decoration: none; border: none;
+      font-family: var(--font-sans); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 13px 20px; cursor: pointer; transition: background .3s;
+    }
+    .svc-btn-cal:hover { background: var(--gold-dark); }
+    .svc-btn-contact {
+      flex: 1; text-align: center;
+      background: none; color: var(--brown);
+      border: 1px solid var(--blush);
+      font-family: var(--font-sans); font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 13px 20px; cursor: pointer;
+      text-decoration: none; transition: all .3s;
+    }
+    .svc-btn-contact:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── HIGHLIGHTS ── */
+    #highlights { background: var(--brown); }
+    .highlights-inner { max-width: 1100px; margin: 0 auto; }
+    .highlights-header { text-align: center; margin-bottom: 50px; }
+    .highlights-header .section-label { color: var(--gold); }
+    .highlights-header .section-title { color: var(--cream); }
+    .highlights-header .divider { margin: 0 auto 32px; background: var(--gold); }
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+    }
+    .highlight-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: transform .3s;
+    }
+    .highlight-card:hover { transform: translateY(-6px); }
+    .highlight-ring {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--gold), var(--rose), #e8c4a0);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .highlight-ring-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid var(--brown);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #3a2f2f, #5a4040);
+    }
+    .highlight-ring-inner span {
+      font-size: 2rem;
+    }
+    .highlight-name {
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--blush);
+      text-align: center;
+      font-family: var(--font-sans);
+    }
+    .hl-ig-link {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(201,169,110,0.4);
+      padding: 12px 32px;
+      display: inline-block;
+      transition: all .3s;
+    }
+    .hl-ig-link:hover { background: var(--gold); color: var(--white); }
+    .hl-center { text-align: center; margin-top: 40px; }
+
+    /* ── PORTFOLIO ── */
+    #portfolio { background: var(--cream); }
+    .portfolio-inner { max-width: 1200px; margin: 0 auto; }
+    .portfolio-header { text-align: center; margin-bottom: 60px; }
+    .portfolio-header .divider { margin: 0 auto 32px; }
+
+    .masonry {
+      columns: 3;
+      column-gap: 16px;
+    }
+    @media(max-width:768px){ .masonry{ columns:2; } }
+    @media(max-width:480px){ .masonry{ columns:1; } }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform .6s ease;
+      filter: sepia(8%) saturate(85%);
+    }
+    .masonry-item:hover img { transform: scale(1.04); }
+    .masonry-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(58,47,47,0);
+      transition: background .4s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .masonry-item:hover .overlay { background: rgba(58,47,47,0.22); }
+
+    /* Lightbox */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(20,14,14,0.94);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+    #lightbox .lb-close {
+      position: absolute;
+      top: 24px; right: 32px;
+      color: var(--cream);
+      font-size: 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    #lightbox .lb-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      color: var(--cream);
+      font-size: 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 20px;
+    }
+    #lightbox .lb-arrow.prev { left: 16px; }
+    #lightbox .lb-arrow.next { right: 16px; }
+
+    /* ── CALCULATOR ── */
+    #calculator { background: var(--blush); }
+    .calc-inner { max-width: 720px; margin: 0 auto; }
+    .calc-header { text-align: center; margin-bottom: 60px; }
+    .calc-header .divider { margin: 0 auto 32px; }
+    .calc-group {
+      background: var(--white);
+      border-radius: 2px;
+      padding: 28px 32px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 20px rgba(58,47,47,0.06);
+    }
+    .calc-group h3 {
+      font-family: var(--font-serif); font-size: 1.3rem;
+      font-weight: 400; margin-bottom: 18px; color: var(--brown);
+    }
+    .calc-row {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; margin-bottom: 14px;
+    }
+    .calc-row label { font-size: 13px; color: #6b5e5e; flex: 1; }
+    .calc-row select,
+    .calc-row input[type=range] {
+      font-family: var(--font-sans); font-size: 13px;
+      padding: 8px 12px; border: 1px solid var(--blush);
+      border-radius: 2px; background: var(--cream);
+      color: var(--brown); width: 180px;
+    }
+    .calc-row input[type=range] { padding: 0; width: 160px; accent-color: var(--gold); }
+    .range-val {
+      font-family: var(--font-serif); font-size: 1.1rem;
+      color: var(--gold-dark); min-width: 60px; text-align: right;
+    }
+    /* Opcionales acordeón en calc principal */
+    .calc-extras-toggle {
+      width: 100%; background: none; border: none;
+      border-top: 1px solid var(--blush);
+      padding: 12px 0 0; text-align: left;
+      font-family: var(--font-sans); font-size: 10px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #bbb; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 10px;
+    }
+    .calc-extras-toggle:hover { color: var(--gold); }
+    .calc-extras-toggle .arr { transition: transform .3s; }
+    .calc-extras-toggle.open .arr { transform: rotate(180deg); }
+    .calc-extras-body { display: none; padding-top: 14px; }
+    .calc-extras-body.open { display: block; }
+    .calc-extras-body .calc-row label { font-size: 12px; color: #bbb; }
+    .calc-extras-body .calc-row select { color: #aaa; font-size: 12px; background: #fafafa; }
+    /* Total */
+    .calc-total {
+      background: var(--brown); color: var(--cream);
+      padding: 32px; text-align: center; border-radius: 2px;
+    }
+    .calc-total .total-label {
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--blush); margin-bottom: 8px; display: block;
+    }
+    .calc-total .total-amount { font-family: var(--font-serif); font-size: 3rem; color: var(--gold); line-height: 1; }
+    .calc-total .total-note { font-size: 11px; color: rgba(232,213,196,0.6); margin-top: 12px; }
+    .btn-quote {
+      display: inline-block; margin-top: 20px;
+      background: var(--gold); color: var(--white);
+      text-decoration: none; font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 14px 36px; border: none; cursor: pointer;
+      font-family: var(--font-sans); transition: background .3s;
+    }
+    .btn-quote:hover { background: var(--gold-dark); }
+
+    /* ── CALENDAR ── */
+    #calendar { background: var(--white); }
+    .calendar-inner { max-width: 900px; margin: 0 auto; }
+    .calendar-header { text-align: center; margin-bottom: 50px; }
+    .calendar-header .divider { margin: 0 auto 32px; }
+    .calendly-placeholder {
+      background: var(--cream);
+      border: 1px dashed var(--gold);
+      border-radius: 4px;
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .calendly-placeholder p {
+      font-size: 14px;
+      color: #6b5e5e;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    .calendly-placeholder code {
+      font-size: 12px;
+      background: var(--blush);
+      padding: 3px 8px;
+      border-radius: 2px;
+      color: var(--brown);
+    }
+    /* If you embed Calendly later, replace .calendly-placeholder with:
+       <div class="calendly-inline-widget" data-url="https://calendly.com/TU_USUARIO" style="min-width:320px;height:630px;"></div>
+       <script src="https://assets.calendly.com/assets/external/widget.js"></script>
+    */
+
+    /* ── CONTACT ── */
+    #contact { background: var(--brown); }
+    .contact-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    #contact .section-label { color: var(--gold); }
+    #contact .section-title { color: var(--cream); }
+    #contact .divider { background: var(--gold); }
+
+    .contact-info p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: rgba(249,243,238,0.75);
+      margin-bottom: 24px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      color: var(--cream);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .contact-item:hover { color: var(--gold); }
+    .contact-item .icon {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      border-radius: 50%;
+    }
+    .social-links { display: flex; gap: 14px; margin-top: 24px; }
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(201,169,110,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 50%;
+      transition: all .3s;
+    }
+    .social-link:hover { background: var(--gold); color: var(--white); }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201,169,110,0.3);
+      padding: 14px 16px;
+      color: var(--cream);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      margin-bottom: 16px;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: rgba(249,243,238,0.35); }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--gold); }
+    .contact-form textarea { height: 130px; resize: none; }
+    .btn-send {
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      padding: 14px 36px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .3s;
+    }
+    .btn-send:hover { background: var(--gold-dark); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #241c1c;
+      color: rgba(249,243,238,0.4);
+      text-align: center;
+      padding: 30px 40px;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 900px) {
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 50px; }
+      section { padding: 70px 24px; }
+      nav ul { gap: 20px; }
+    }
+
+    /* ── i18n ── */
+    [data-lang] { display: none; }
+    [data-lang="es"] { display: initial; }
+    body.lang-en [data-lang="es"] { display: none; }
+    body.lang-en [data-lang="en"] { display: initial; }
+    /* block elements */
+    [data-lang-block] { display: none; }
+    [data-lang-block="es"] { display: block; }
+    body.lang-en [data-lang-block="es"] { display: none; }
+    body.lang-en [data-lang-block="en"] { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- Language switcher -->
+<div id="lang-switcher">
+  <button class="active" onclick="setLang('es')">ES</button>
+  <button onclick="setLang('en')">EN</button>
+</div>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo-wrap"><img src="logo.png" alt="Sophie Fotografía" class="nav-logo" /></a>
+  <ul>
+    <li><a href="#about"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span></a></li>
+    <li><a href="#services"><span data-lang="es">Servicios</span><span data-lang="en">Services</span></a></li>
+    <li><a href="#portfolio"><span data-lang="es">Portafolio</span><span data-lang="en">Portfolio</span></a></li>
+    <li><a href="#highlights"><span data-lang="es">Historias</span><span data-lang="en">Stories</span></a></li>
+    <li><a href="#calculator"><span data-lang="es">Precios</span><span data-lang="en">Pricing</span></a></li>
+    <li><a href="#calendar"><span data-lang="es">Agenda</span><span data-lang="en">Schedule</span></a></li>
+    <li><a href="#contact"><span data-lang="es">Contacto</span><span data-lang="en">Contact</span></a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-slide active" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Y-Fabri-1-1200x801.jpg')"></div>
+  <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Anto-Y-Lea-2-1188x950.jpg')"></div>
+  <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Vivi-Julio-5-1200x801.jpg')"></div>
+  <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/ASDA-111-1200x801.jpg')"></div>
+  <div class="hero-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Fabri-40-1200x801.jpg')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <img src="logo.png" alt="Sophie Fotografía" class="hero-logo" />
+    <h1>Sophie<br><em>Fotografía</em></h1>
+    <p>
+      <span data-lang="es">Fotografía de bodas · Buenos Aires, Argentina</span>
+      <span data-lang="en">Wedding Photography · Buenos Aires, Argentina</span>
+    </p>
+    <a href="#portfolio" class="btn-hero">
+      <span data-lang="es">Ver mi trabajo</span>
+      <span data-lang="en">See my work</span>
+    </a>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-img">
+      <div class="about-slideshow" id="about-slideshow">
+        <div class="about-slide active" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/fff-1-1188x950.jpg')"></div>
+        <div class="about-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Fabri-33-634x950.jpg')"></div>
+        <div class="about-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/08/01-Los-Novios-sophie.resio@gmail.com-Sophie-Resio-9-634x950.jpg')"></div>
+        <div class="about-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/05/Clary-1188x950.jpg')"></div>
+        <div class="about-slide" style="background-image:url('https://bodasargentina.com/wp-content/uploads/2021/08/02-Los-Novios-sophie.resio@gmail.com-Sophie-Resio-4-634x950.jpg')"></div>
+      </div>
+    </div>
+    <div class="about-text">
+      <span class="section-label">
+        <span data-lang="es">Sobre mí</span>
+        <span data-lang="en">About me</span>
+      </span>
+      <h2 class="section-title">
+        <span data-lang="es">Capturo <em>momentos</em><br>que duran para siempre</span>
+        <span data-lang="en">I capture <em>moments</em><br>that last forever</span>
+      </h2>
+      <div class="divider"></div>
+      <p data-lang-block="es">
+        Fotografía que se siente. Parejas reales, emociones reales. Soy Sophie, fotógrafa de bodas y 15 años basada en Buenos Aires — fan del amor y de las historias que merecen ser contadas con honestidad y emoción.
+      </p>
+      <p data-lang-block="en">
+        Photography that feels real. Real couples, real emotions. I'm Sophie, a wedding and quinceañera photographer based in Buenos Aires — a fan of love and stories worth telling with honesty and heart.
+      </p>
+      <p data-lang-block="es">
+        Con años de experiencia en toda la provincia de Buenos Aires, cada sesión es para mí una oportunidad única de preservar esos instantes que no se repiten. Trabajo de manera discreta, cercana y apasionada.
+      </p>
+      <p data-lang-block="en">
+        With years of experience across Buenos Aires province, each session is a unique opportunity to preserve those unrepeatable moments. I work in a discreet, warm, and passionate way.
+      </p>
+      <div class="awards-block">
+        <div class="awards-title">
+          <span data-lang="es">Reconocimientos</span>
+          <span data-lang="en">Awards</span>
+        </div>
+        <div class="award-list">
+          <div class="award-item">
+            <div class="award-medal gold">🥇</div>
+            <div class="award-info">
+              <strong><span data-lang="es">1er Puesto · Los Novios</span><span data-lang="en">1st Place · The Couple</span></strong>
+              <span><span data-lang="es">Concurso</span><span data-lang="en">Contest</span> 2021 – C2</span>
+            </div>
+            <div class="award-year">2021</div>
+          </div>
+          <div class="award-item">
+            <div class="award-medal silver">🥈</div>
+            <div class="award-info">
+              <strong><span data-lang="es">2do Puesto · Los Novios</span><span data-lang="en">2nd Place · The Couple</span></strong>
+              <span><span data-lang="es">Concurso</span><span data-lang="en">Contest</span> 2021 – C2</span>
+            </div>
+            <div class="award-year">2021</div>
+          </div>
+          <div class="award-item">
+            <div class="award-medal bronze">🏅</div>
+            <div class="award-info">
+              <strong><span data-lang="es">4to Puesto · Sesiones</span><span data-lang="en">4th Place · Sessions</span></strong>
+              <span><span data-lang="es">Concurso</span><span data-lang="en">Contest</span> 2021 – C4</span>
+            </div>
+            <div class="award-year">2021</div>
+          </div>
+        </div>
+
+        <!-- Más premios colapsados -->
+        <button class="awards-more-btn" id="awards-more-btn" onclick="toggleAwardsMore()">
+          <span data-lang="es">+ 4 reconocimientos más</span>
+          <span data-lang="en">+ 4 more awards</span>
+          <span class="arr">▾</span>
+        </button>
+        <div class="award-list awards-more" id="awards-more">
+          <div class="award-item">
+            <div class="award-medal">5°</div>
+            <div class="award-info">
+              <strong><span data-lang="es">5to Puesto · Sesiones</span><span data-lang="en">5th Place · Sessions</span></strong>
+              <span><span data-lang="es">Concurso</span><span data-lang="en">Contest</span> 2021 – C2</span>
+            </div>
+            <div class="award-year">2021</div>
+          </div>
+          <div class="award-item">
+            <div class="award-medal">6°</div>
+            <div class="award-info">
+              <strong><span data-lang="es">6to Puesto · Los Novios</span><span data-lang="en">6th Place · The Couple</span></strong>
+              <span><span data-lang="es">Concurso</span><span data-lang="en">Contest</span> 2021 – C2</span>
+            </div>
+            <div class="award-year">2021</div>
+          </div>
+          <div class="award-item">
+            <div class="award-medal">8°</div>
+            <div class="award-info">
+              <strong><span data-lang="es">8vo Puesto · Los Novios</span><span data-lang="en">8th Place · The Couple</span></strong>
+              <span><span data-lang="es">Concurso</span><span data-lang="en">Contest</span> 2021 – C2</span>
+            </div>
+            <div class="award-year">2021</div>
+          </div>
+          <div class="award-item">
+            <div class="award-medal">9°</div>
+            <div class="award-info">
+              <strong><span data-lang="es">9no Puesto · Sesiones</span><span data-lang="en">9th Place · Sessions</span></strong>
+              <span><span data-lang="es">Concurso</span><span data-lang="en">Contest</span> 2021 – C2</span>
+            </div>
+            <div class="award-year">2021</div>
+          </div>
+        </div>
+      </div>
+      <div class="signature">Sophie Resio</div>
+    </div>
+  </div>
+</section>
+
+<!-- Quote Strip -->
+<div id="quote-strip">
+  <div class="quote-strip-inner">
+    <blockquote>
+      <span data-lang="es">Fotografía que se siente. Parejas reales, emociones reales.</span>
+      <span data-lang="en">Photography that feels real. Real couples, real emotions.</span>
+    </blockquote>
+    <cite>Sophie Resio</cite>
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="num">7</span>
+        <span class="lbl"><span data-lang="es">Premios</span><span data-lang="en">Awards</span></span>
+      </div>
+      <div class="stat-item">
+        <span class="num">🥇</span>
+        <span class="lbl"><span data-lang="es">1er Puesto 2021</span><span data-lang="en">1st Place 2021</span></span>
+      </div>
+      <div class="stat-item">
+        <span class="num">+5</span>
+        <span class="lbl"><span data-lang="es">Años de experiencia</span><span data-lang="en">Years of experience</span></span>
+      </div>
+      <div class="stat-item">
+        <span class="num">BA</span>
+        <span class="lbl">Buenos Aires</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Services -->
+<section id="services">
+  <div class="services-inner">
+    <div class="services-header">
+      <span class="section-label"><span data-lang="es">Lo que hago</span><span data-lang="en">What I do</span></span>
+      <h2 class="section-title"><span data-lang="es">Otros <em>servicios</em></span><span data-lang="en">Other <em>services</em></span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card" onclick="openSvcModal('bodas')">
+        <span class="service-icon">💍</span>
+        <h3><span data-lang="es">Bodas</span><span data-lang="en">Weddings</span></h3>
+        <p><span data-lang="es">Cobertura completa del día más especial. Desde los preparativos hasta el último baile.</span><span data-lang="en">Full coverage of your most special day. From preparations to the last dance.</span></p>
+        <span class="service-cta"><span data-lang="es">Ver precios y agendar</span><span data-lang="en">Pricing & booking</span></span>
+      </div>
+      <div class="service-card" onclick="openSvcModal('quince')">
+        <span class="service-icon">🌸</span>
+        <h3><span data-lang="es">15 Años</span><span data-lang="en">Quinceañera</span></h3>
+        <p><span data-lang="es">Un momento único que merece ser recordado para siempre. Sesiones y cobertura completa del evento.</span><span data-lang="en">A unique moment that deserves to be remembered forever. Full session and event coverage.</span></p>
+        <span class="service-cta"><span data-lang="es">Ver precios y agendar</span><span data-lang="en">Pricing & booking</span></span>
+      </div>
+      <div class="service-card" onclick="openSvcModal('cumple')">
+        <span class="service-icon">🎉</span>
+        <h3><span data-lang="es">Cumpleaños &amp; Fiestas</span><span data-lang="en">Birthdays &amp; Parties</span></h3>
+        <p><span data-lang="es">Celebraciones de todo tipo. Momentos de alegría capturados con naturalidad y emoción.</span><span data-lang="en">All kinds of celebrations. Joyful moments captured naturally and emotionally.</span></p>
+        <span class="service-cta"><span data-lang="es">Ver precios y agendar</span><span data-lang="en">Pricing & booking</span></span>
+      </div>
+      <div class="service-card" onclick="openSvcModal('productos')">
+        <span class="service-icon">📦</span>
+        <h3><span data-lang="es">Fotoproductos</span><span data-lang="en">Product Photography</span></h3>
+        <p><span data-lang="es">Fotografía de productos para marcas y emprendimientos. Imágenes que destacan y venden.</span><span data-lang="en">Product photography for brands and businesses. Images that stand out and sell.</span></p>
+        <span class="service-cta"><span data-lang="es">Ver precios y agendar</span><span data-lang="en">Pricing & booking</span></span>
+      </div>
+      <div class="service-card" onclick="openSvcModal('preboda')">
+        <span class="service-icon">💑</span>
+        <h3><span data-lang="es">Pre-boda / E-session</span><span data-lang="en">Pre-wedding / E-session</span></h3>
+        <p><span data-lang="es">Sesión de pareja antes del gran día. Una experiencia relajada para conocernos y crear recuerdos únicos.</span><span data-lang="en">Couple session before the big day. A relaxed experience to get to know each other.</span></p>
+        <span class="service-cta"><span data-lang="es">Ver precios y agendar</span><span data-lang="en">Pricing & booking</span></span>
+      </div>
+      <div class="service-card" onclick="openSvcModal('books')">
+        <span class="service-icon">📸</span>
+        <h3>Books</h3>
+        <p><span data-lang="es">Books artísticos y de moda. Sesiones personalizadas para modelos, artistas o simplemente para vos.</span><span data-lang="en">Artistic and fashion portfolios. Personalized sessions for models, artists, or simply for you.</span></p>
+        <span class="service-cta"><span data-lang="es">Ver precios y agendar</span><span data-lang="en">Pricing & booking</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Service Modal -->
+<div id="svc-modal">
+  <div class="svc-modal-box">
+    <div class="svc-modal-header">
+      <span class="svc-icon" id="m-icon"></span>
+      <h3 id="m-title"></h3>
+      <button class="svc-modal-close" onclick="closeSvcModal()">✕</button>
+    </div>
+    <div class="svc-modal-body" id="m-body"></div>
+    <div class="svc-modal-actions">
+      <a href="https://calendly.com/sophie-fotografia" target="_blank" class="svc-btn-cal">
+        <span data-lang="es">📅 Agendar reunión</span><span data-lang="en">📅 Book a meeting</span>
+      </a>
+      <a href="#contact" class="svc-btn-contact" onclick="closeSvcModal()">
+        <span data-lang="es">✉ Consultar</span><span data-lang="en">✉ Enquire</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Highlights -->
+<section id="highlights">
+  <div class="highlights-inner">
+    <div class="highlights-header">
+      <span class="section-label">Instagram</span>
+      <h2 class="section-title">
+        <span data-lang="es">Historias <em>destacadas</em></span>
+        <span data-lang="en"><em>Featured</em> stories</span>
+      </h2>
+      <div class="divider"></div>
+    </div>
+    <div class="highlights-grid">
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/17912084128332704/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>📚</span></div></div>
+        <span class="highlight-name">Books</span>
+      </a>
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/17890429343302827/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>🎁</span></div></div>
+        <span class="highlight-name">Entregas ❤️</span>
+      </a>
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/17875812574825416/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>⭐</span></div></div>
+        <span class="highlight-name">Destacadas</span>
+      </a>
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/17935380559569432/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>💑</span></div></div>
+        <span class="highlight-name">Agus + Nacho</span>
+      </a>
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/17930660488614112/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>💒</span></div></div>
+        <span class="highlight-name">Mare + Frank</span>
+      </a>
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/17855936318036003/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>❤️</span></div></div>
+        <span class="highlight-name">Ustedes ❤️</span>
+      </a>
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/17885026364135688/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>🌸</span></div></div>
+        <span class="highlight-name">Agus XV</span>
+      </a>
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/17888629546899574/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>✨</span></div></div>
+        <span class="highlight-name">Historia 8</span>
+      </a>
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/17882787427416800/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>📷</span></div></div>
+        <span class="highlight-name">Historia 9</span>
+      </a>
+      <a class="highlight-card" href="https://www.instagram.com/stories/highlights/18012668308279681/" target="_blank">
+        <div class="highlight-ring"><div class="highlight-ring-inner"><span>🎞️</span></div></div>
+        <span class="highlight-name">Historia 10</span>
+      </a>
+    </div>
+    <div class="hl-center">
+      <a href="https://www.instagram.com/sophiefotografia" target="_blank" class="hl-ig-link">
+        <span data-lang="es">Ver todo en Instagram →</span>
+        <span data-lang="en">See everything on Instagram →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio -->
+<section id="portfolio">
+  <div class="portfolio-inner">
+    <div class="portfolio-header">
+      <span class="section-label">Portfolio</span>
+      <h2 class="section-title">
+        <span data-lang="es">Mis <em>mejores</em> momentos</span>
+        <span data-lang="en">My <em>best</em> moments</span>
+      </h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="masonry" id="gallery">
+      <div class="masonry-item" onclick="openLightbox(0)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Y-Fabri-1-1200x801.jpg" alt="Maca y Fabri" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(1)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/05/Anto-Y-Lea-2-1188x950.jpg" alt="Anto y Lea" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(2)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Fabri-33-634x950.jpg" alt="Maca y Fabri 2" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(3)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Y-Fabri-1-5-1200x801.jpg" alt="Maca y Fabri 3" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(4)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/05/Vivi-Julio-5-1200x801.jpg" alt="Vivi y Julio" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(5)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/05/Clary-1188x950.jpg" alt="Clary" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(6)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/05/ASDA-111-1200x801.jpg" alt="ASDA 1" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(7)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/05/ASDA-31-1200x801.jpg" alt="ASDA 2" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(8)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/05/Maca-Fabri-40-1200x801.jpg" alt="Maca y Fabri 4" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <!-- Premiadas -->
+      <div class="masonry-item" onclick="openLightbox(9)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/08/01-Los-Novios-sophie.resio@gmail.com-Sophie-Resio-9-634x950.jpg" alt="Premio 1er Puesto" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(10)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2021/08/02-Los-Novios-sophie.resio@gmail.com-Sophie-Resio-4-634x950.jpg" alt="Premio 2do Puesto" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+      <div class="masonry-item" onclick="openLightbox(11)">
+        <img src="https://bodasargentina.com/wp-content/uploads/2022/02/04-Sesiones-sophie.resio@gmail.com-Sophie-Resio-3.jpg" alt="Premio Sesiones" loading="lazy" />
+        <div class="overlay"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-arrow prev" onclick="lbNav(-1)">‹</button>
+  <img id="lb-img" src="" alt="" />
+  <button class="lb-arrow next" onclick="lbNav(1)">›</button>
+</div>
+
+<!-- Calculator -->
+<section id="calculator">
+  <div class="calc-inner">
+    <div class="calc-header">
+      <span class="section-label">
+        <span data-lang="es">Calculadora de costos</span>
+        <span data-lang="en">Price calculator</span>
+      </span>
+      <h2 class="section-title">
+        <span data-lang="es"><em>Armá</em> tu paquete ideal</span>
+        <span data-lang="en"><em>Build</em> your ideal package</span>
+      </h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="calc-group">
+      <h3>📷 <span data-lang="es">Servicio de Fotografía</span><span data-lang="en">Photography Service</span></h3>
+      <div class="calc-row">
+        <label><span data-lang="es">Tipo de evento</span><span data-lang="en">Event type</span></label>
+        <select id="c-event" onchange="calcTotal()">
+          <option value="30000">Boda completa / Full Wedding</option>
+          <option value="22000">Boda civil / Civil wedding</option>
+          <option value="20000">15 Años / Quinceañera</option>
+          <option value="14000">Cumpleaños / Birthday party</option>
+          <option value="18000">Pre-boda / E-session</option>
+          <option value="10000">Book / Sesión individual</option>
+          <option value="8000">Fotoproductos</option>
+        </select>
+      </div>
+      <div class="calc-row">
+        <label><span data-lang="es">Horas de cobertura</span><span data-lang="en">Coverage hours</span></label>
+        <input type="range" id="c-hours" min="2" max="12" value="6" oninput="this.nextElementSibling.textContent=this.value+'h'; calcTotal()" />
+        <span class="range-val">6h</span>
+      </div>
+      <div class="calc-row">
+        <label><span data-lang="es">Segundo fotógrafo</span><span data-lang="en">Second photographer</span></label>
+        <select id="c-second" onchange="calcTotal()">
+          <option value="0">No</option>
+          <option value="8000">Sí / Yes (+$8.000)</option>
+        </select>
+      </div>
+
+      <!-- Opcionales discretos -->
+      <button class="calc-extras-toggle" id="main-extras-btn" onclick="toggleExtras('main-extras-btn','main-extras-body')">
+        <span data-lang="es">+ Opciones adicionales</span><span data-lang="en">+ Additional options</span>
+        <span class="arr">▾</span>
+      </button>
+      <div class="calc-extras-body" id="main-extras-body">
+        <div class="calc-row">
+          <label><span data-lang="es">Tipo de edición</span><span data-lang="en">Edit style</span></label>
+          <select id="c-edit" onchange="calcTotal()">
+            <option value="5000"><span data-lang="es">Básica</span><span data-lang="en">Basic</span></option>
+            <option value="10000" selected><span data-lang="es">Estándar</span><span data-lang="en">Standard</span></option>
+            <option value="18000"><span data-lang="es">Premium</span><span data-lang="en">Premium</span></option>
+          </select>
+        </div>
+        <div class="calc-row">
+          <label><span data-lang="es">Álbum impreso</span><span data-lang="en">Printed album</span></label>
+          <select id="c-album" onchange="calcTotal()">
+            <option value="0"><span data-lang="es">Sin álbum</span><span data-lang="en">No album</span></option>
+            <option value="15000">20×20 cm</option>
+            <option value="25000">30×30 cm</option>
+          </select>
+        </div>
+        <div class="calc-row">
+          <label><span data-lang="es">Traslado</span><span data-lang="en">Transport</span></label>
+          <select id="c-travel" onchange="calcTotal()">
+            <option value="0">CABA / Ramos Mejía</option>
+            <option value="3000">GBA hasta 30 km (+$3.000)</option>
+            <option value="7000">GBA hasta 60 km (+$7.000)</option>
+            <option value="15000"><span data-lang="es">Larga distancia</span><span data-lang="en">Long distance</span> (+$15.000)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div class="calc-total">
+      <span class="total-label"><span data-lang="es">Estimado total</span><span data-lang="en">Estimated total</span></span>
+      <div class="total-amount" id="c-total">$40.000</div>
+      <p class="total-note">
+        <span data-lang="es">* Precios en ARS. Consultar para presupuesto personalizado.</span>
+        <span data-lang="en">* Prices in ARS. Ask for a personalized quote.</span>
+      </p>
+      <br/>
+      <a href="#contact" class="btn-quote"><span data-lang="es">Solicitar presupuesto</span><span data-lang="en">Request a quote</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Calendar -->
+<section id="calendar">
+  <div class="calendar-inner">
+    <div class="calendar-header">
+      <span class="section-label">
+        <span data-lang="es">Agenda una reunión</span>
+        <span data-lang="en">Schedule a meeting</span>
+      </span>
+      <h2 class="section-title">
+        <span data-lang="es"><em>Hablemos</em> de tu día</span>
+        <span data-lang="en">Let's talk about <em>your day</em></span>
+      </h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="calendly-inline-widget" data-url="https://calendly.com/sophie-fotografia" style="min-width:320px;height:660px;"></div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <span class="section-label">
+        <span data-lang="es">Contacto</span>
+        <span data-lang="en">Contact</span>
+      </span>
+      <h2 class="section-title">
+        <span data-lang="es"><em>Contame</em><br>tu historia</span>
+        <span data-lang="en"><em>Tell me</em><br>your story</span>
+      </h2>
+      <div class="divider"></div>
+      <p data-lang-block="es">Me encantaría ser parte de tu día especial. Escribime y hablamos de lo que soñás.</p>
+      <p data-lang-block="en">I would love to be part of your special day. Write to me and let's talk about your dream.</p>
+
+      <a href="mailto:sophie.resio@gmail.com" class="contact-item">
+        <span class="icon">✉</span>
+        sophie.resio@gmail.com
+      </a>
+      <a href="tel:+541161606582" class="contact-item">
+        <span class="icon">✆</span>
+        +54 11 6160-6582
+      </a>
+      <div class="contact-item">
+        <span class="icon">📍</span>
+        Ramos Mejía, Buenos Aires
+      </div>
+
+      <div class="social-links">
+        <a href="https://www.instagram.com/sophiefotografia" target="_blank" class="social-link" title="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/sophiephoto1" target="_blank" class="social-link" title="Instagram 2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <form onsubmit="handleForm(event)">
+        <input type="text" id="f-name" placeholder="Nombre / Name" required />
+        <input type="email" id="f-email" placeholder="Email" required />
+        <input type="text" id="f-date" placeholder="Fecha del evento / Event date" />
+        <textarea id="f-msg" placeholder="¿Cuál es tu historia? / What's your story?"></textarea>
+        <button type="submit" class="btn-send">
+          <span data-lang="es">Enviar mensaje</span>
+          <span data-lang="en">Send message</span>
+        </button>
+      </form>
+      <p id="form-ok" style="display:none;margin-top:16px;color:var(--gold);font-size:13px;"></p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <img src="logo.png" alt="Sophie Fotografía" style="height:60px;background:rgba(255,255,255,0.12);border-radius:6px;padding:4px 10px;margin-bottom:14px;display:block;margin-left:auto;margin-right:auto;" />
+  <p>© 2025 Sophie Fotografía · Ramos Mejía, Buenos Aires, Argentina ·
+    <a href="mailto:sophie.resio@gmail.com">sophie.resio@gmail.com</a>
+  </p>
+</footer>
+
+<script>
+  // ── LANGUAGE ──
+  function setLang(l) {
+    document.body.classList.toggle('lang-en', l === 'en');
+    document.querySelectorAll('#lang-switcher button').forEach((b,i) => {
+      b.classList.toggle('active', (i===0 && l==='es') || (i===1 && l==='en'));
+    });
+    document.documentElement.lang = l;
+    calcTotal(); // refresh total label
+  }
+
+  // ── NAV SCROLL ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── AWARDS MORE ──
+  function toggleAwardsMore() {
+    const btn  = document.getElementById('awards-more-btn');
+    const body = document.getElementById('awards-more');
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+  }
+
+  // ── ABOUT SLIDESHOW ──
+  (function(){
+    const slides = document.querySelectorAll('.about-slide');
+    let i = 0;
+    setInterval(() => {
+      slides[i].classList.remove('active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('active');
+    }, 5000);
+  })();
+
+  // ── HERO SLIDESHOW ──
+  const slides = document.querySelectorAll('.hero-slide');
+  let cur = 0;
+  setInterval(() => {
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add('active');
+  }, 4500);
+
+  // ── LIGHTBOX ──
+  const galleryImgs = Array.from(document.querySelectorAll('.masonry-item img')).map(i => i.src);
+  let lbIdx = 0;
+  function openLightbox(i) {
+    lbIdx = i;
+    document.getElementById('lb-img').src = galleryImgs[i];
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function lbNav(dir) {
+    lbIdx = (lbIdx + dir + galleryImgs.length) % galleryImgs.length;
+    document.getElementById('lb-img').src = galleryImgs[lbIdx];
+  }
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'ArrowLeft') lbNav(-1);
+  });
+
+  // ── CALCULATOR (main) ──
+  function calcTotal() {
+    const event  = parseInt(document.getElementById('c-event').value)  || 0;
+    const hours  = parseInt(document.getElementById('c-hours').value)  || 6;
+    const second = parseInt(document.getElementById('c-second').value) || 0;
+    const edit   = parseInt(document.getElementById('c-edit').value)   || 0;
+    const album  = parseInt(document.getElementById('c-album').value)  || 0;
+    const travel = parseInt(document.getElementById('c-travel').value) || 0;
+    const hourExtra = Math.max(0, hours - 6) * 2500;
+    const total = event + hourExtra + second + edit + album + travel;
+    document.getElementById('c-total').textContent = '$' + total.toLocaleString('es-AR');
+  }
+  calcTotal();
+
+  // ── EXTRAS ACCORDION ──
+  function toggleExtras(btnId, bodyId) {
+    const btn  = document.getElementById(btnId);
+    const body = document.getElementById(bodyId);
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+  }
+
+  // ── SERVICE MODAL ──
+  const svcData = {
+    bodas: {
+      icon: '💍', nameEs: 'Bodas', nameEn: 'Weddings',
+      rows: [
+        { label: ['Horas de cobertura','Coverage hours'], type:'range', id:'sm-hours', min:4, max:12, val:8, unit:'h', base:30000, rate:2500 },
+        { label: ['Segundo fotógrafo','Second photographer'], type:'select', id:'sm-second',
+          opts:[['No',0],['Sí / Yes (+$8.000)',8000]] },
+      ]
+    },
+    quince: {
+      icon: '🌸', nameEs: '15 Años', nameEn: 'Quinceañera',
+      rows: [
+        { label: ['Horas de cobertura','Coverage hours'], type:'range', id:'sm-hours', min:3, max:8, val:5, unit:'h', base:20000, rate:2500 },
+        { label: ['Segundo fotógrafo','Second photographer'], type:'select', id:'sm-second',
+          opts:[['No',0],['Sí / Yes (+$8.000)',8000]] },
+      ]
+    },
+    cumple: {
+      icon: '🎉', nameEs: 'Cumpleaños & Fiestas', nameEn: 'Birthdays & Parties',
+      rows: [
+        { label: ['Horas de cobertura','Coverage hours'], type:'range', id:'sm-hours', min:2, max:6, val:3, unit:'h', base:14000, rate:2000 },
+      ]
+    },
+    productos: {
+      icon: '📦', nameEs: 'Fotoproductos', nameEn: 'Product Photography',
+      rows: [
+        { label: ['Cantidad de productos','Number of products'], type:'range', id:'sm-qty', min:5, max:50, val:15, unit:'', base:8000, rate:300 },
+      ]
+    },
+    preboda: {
+      icon: '💑', nameEs: 'Pre-boda / E-session', nameEn: 'Pre-wedding / E-session',
+      rows: [
+        { label: ['Duración','Duration'], type:'select', id:'sm-dur',
+          opts:[['1.5 hs',18000],['2 hs',22000],['3 hs',28000]] },
+      ]
+    },
+    books: {
+      icon: '📸', nameEs: 'Books', nameEn: 'Books',
+      rows: [
+        { label: ['Cantidad de looks','Number of looks'], type:'range', id:'sm-looks', min:1, max:5, val:2, unit:' looks', base:10000, rate:3000 },
+      ]
+    }
+  };
+
+  function openSvcModal(key) {
+    const d   = svcData[key];
+    const isEn = document.body.classList.contains('lang-en');
+    document.getElementById('m-icon').textContent  = d.icon;
+    document.getElementById('m-title').textContent = isEn ? d.nameEn : d.nameEs;
+    // Build body HTML
+    let html = '';
+    d.rows.forEach(r => {
+      const lbl = isEn ? r.label[1] : r.label[0];
+      if (r.type === 'range') {
+        html += `<div class="svc-calc-row">
+          <label>${lbl}</label>
+          <input type="range" id="${r.id}" min="${r.min}" max="${r.max}" value="${r.val}"
+            oninput="this.nextElementSibling.textContent=this.value+'${r.unit}'; svcCalc()" />
+          <span class="svc-range-val">${r.val}${r.unit}</span>
+        </div>`;
+      } else {
+        html += `<div class="svc-calc-row"><label>${lbl}</label><select id="${r.id}" onchange="svcCalc()">`;
+        r.opts.forEach(o => { html += `<option value="${o[1]}">${o[0]}</option>`; });
+        html += `</select></div>`;
+      }
+    });
+    // Extras accordion
+    html += `<button class="svc-extras-toggle" id="svc-ext-btn" onclick="toggleExtras('svc-ext-btn','svc-ext-body')">
+      <span>${isEn ? '+ Additional options' : '+ Opciones adicionales'}</span> <span class="arr">▾</span>
+    </button>
+    <div class="svc-extras-body" id="svc-ext-body">
+      <div class="svc-calc-row">
+        <label>${isEn ? 'Edit style' : 'Tipo de edición'}</label>
+        <select id="sm-edit" onchange="svcCalc()">
+          <option value="5000">${isEn ? 'Basic' : 'Básica'}</option>
+          <option value="10000" selected>${isEn ? 'Standard' : 'Estándar'}</option>
+          <option value="18000">${isEn ? 'Premium' : 'Premium'}</option>
+        </select>
+      </div>
+      <div class="svc-calc-row">
+        <label>${isEn ? 'Transport' : 'Traslado'}</label>
+        <select id="sm-travel" onchange="svcCalc()">
+          <option value="0">CABA / Ramos Mejía</option>
+          <option value="3000">GBA hasta 30 km (+$3.000)</option>
+          <option value="7000">GBA hasta 60 km (+$7.000)</option>
+          <option value="15000">${isEn ? 'Long distance' : 'Larga distancia'} (+$15.000)</option>
+        </select>
+      </div>
+    </div>`;
+    // Total bar
+    html += `<div class="svc-total-bar">
+      <span class="tl">${isEn ? 'Estimated total' : 'Estimado total'}</span>
+      <span class="ta" id="sm-total">$0</span>
+    </div>`;
+    document.getElementById('m-body').innerHTML = html;
+    document.getElementById('svc-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // store current key for calc
+    document.getElementById('svc-modal').dataset.key = key;
+    svcCalc();
+  }
+
+  function svcCalc() {
+    const key = document.getElementById('svc-modal').dataset.key;
+    const d   = svcData[key];
+    let total = 0;
+    d.rows.forEach(r => {
+      const el = document.getElementById(r.id);
+      if (!el) return;
+      if (r.type === 'range') {
+        const v = parseInt(el.value);
+        total += r.base + Math.max(0, v - r.val) * r.rate;
+      } else {
+        total += parseInt(el.value) || 0;
+      }
+    });
+    const edit  = parseInt(document.getElementById('sm-edit')?.value)  || 0;
+    const trvl  = parseInt(document.getElementById('sm-travel')?.value) || 0;
+    total += edit + trvl;
+    const el = document.getElementById('sm-total');
+    if (el) el.textContent = '$' + total.toLocaleString('es-AR');
+  }
+
+  function closeSvcModal() {
+    document.getElementById('svc-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('svc-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('svc-modal')) closeSvcModal();
+  });
+
+  // ── FORM ──
+  function handleForm(e) {
+    e.preventDefault();
+    const name = document.getElementById('f-name').value;
+    const isEn = document.body.classList.contains('lang-en');
+    const ok = document.getElementById('form-ok');
+    ok.style.display = 'block';
+    ok.textContent = isEn
+      ? `Thank you, ${name}! I'll be in touch soon.`
+      : `¡Gracias, ${name}! Te escribo pronto.`;
+    e.target.reset();
+  }
+</script>
+</body>
+</html>
